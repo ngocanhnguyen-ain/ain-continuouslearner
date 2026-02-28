@@ -1,2 +1,2 @@
-# ain-continuouslearner.github.io
+# ain-continuouslearner
 Ain.Continuous Learner Blog

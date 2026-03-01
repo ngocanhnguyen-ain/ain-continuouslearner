@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ja" data-lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMDB Basics · ServiceNow · Ain.dev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --bg:#0d1117;--surface:#161b22;--surface2:#1c2128;
+  --border:#30363d;--border-light:#21262d;
+  --text:#e6edf3;--text-muted:#8b949e;--text-dim:#484f58;
+  --accent:#2f81f7;--accent-glow:rgba(47,129,247,0.15);
+  --accent2:#3fb950;--accent3:#d2a8ff;
+  --yellow:#e3b341;--orange:#f0883e;--pink:#ff7b93;
+  --teal:#39d353;--white:#ffffff;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Source Serif 4','Times New Roman',Georgia,serif;background:var(--bg);color:var(--text);font-size:17px;line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+/* LANG */
+.lang-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:7px 32px;display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);}
+.dot-live{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px var(--teal);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.lang-bar-left{display:flex;align-items:center;gap:6px;}
+.lang-btns{display:flex;gap:4px;}
+.lang-btn{background:none;border:1px solid var(--border);color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1px;cursor:pointer;padding:3px 10px;border-radius:4px;transition:all 0.2s;}
+.lang-btn:hover{border-color:var(--accent);color:var(--accent);}
+.lang-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);}
+.header-top{max-width:1200px;margin:0 auto;padding:20px 32px 0;display:flex;align-items:flex-end;justify-content:space-between;}
+.logo-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:5px;display:flex;align-items:center;gap:6px;}
+.logo-eyebrow::before{content:'>';color:var(--accent2);}
+.site-title{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:600;color:var(--white);}
+.site-title .name{color:var(--accent);}
+nav{border-top:1px solid var(--border-light);margin-top:2px;}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:flex;overflow-x:auto;}
+nav ul{list-style:none;display:flex;flex-wrap:nowrap;}
+nav ul li a{display:block;padding:10px 13px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.2s;}
+nav ul li a:hover,nav ul li.active a{color:var(--white);border-bottom-color:var(--accent);text-decoration:none;}
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);margin-top:60px;}
+.footer-inner{max-width:1200px;margin:0 auto;padding:32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;}
+.footer-brand{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:600;color:var(--white);}
+.footer-brand span{color:var(--accent);}
+.footer-brand small{display:block;font-size:10px;color:var(--accent2);margin-top:4px;font-weight:400;}
+.footer-brand p{font-family:'Source Serif 4',serif;font-size:13px;color:var(--text-muted);margin-top:10px;line-height:1.6;font-weight:400;}
+.footer-links h4{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;}
+.footer-links ul{list-style:none;}
+.footer-links ul li{margin-bottom:7px;}
+.footer-links ul li a{font-family:'Inter',sans-serif;font-size:13px;color:var(--text-muted);transition:color 0.2s;}
+.footer-links ul li a:hover{color:var(--white);text-decoration:none;}
+.footer-social{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+.social-btn{display:inline-flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 14px;font-family:'Inter',sans-serif;font-size:12px;color:var(--text-muted);transition:all 0.2s;text-decoration:none;}
+.social-btn:hover{text-decoration:none;border-color:var(--accent);color:var(--white);}
+.social-btn .s-icon{font-size:16px;}
+.footer-bottom{max-width:1200px;margin:0 auto;padding:16px 32px;border-top:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);}
+/* BREADCRUMB */
+.breadcrumb{max-width:1200px;margin:0 auto;padding:12px 32px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.breadcrumb .sep{color:var(--border);}
+.breadcrumb a{color:var(--text-dim);}
+.breadcrumb a:hover{color:var(--accent);}
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp 0.5s ease both;}
+/* ARTICLE GRID */
+.article-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;}
+.article-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all 0.2s;display:flex;flex-direction:column;}
+.article-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 24px rgba(47,129,247,0.1);}
+.card-badge{padding:14px 16px 0;display:flex;align-items:center;gap:8px;}
+.cat-tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:12px;border:1px solid;}
+.card-body{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column;}
+.card-title{font-family:'Source Serif 4',serif;font-size:17px;font-weight:700;color:var(--white);line-height:1.3;margin-bottom:8px;}
+.card-desc{font-family:'Source Serif 4',serif;font-size:13.5px;color:var(--text-muted);line-height:1.65;flex:1;}
+.card-meta{display:flex;align-items:center;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border-light);}
+.card-meta span{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);}
+.card-read-btn{margin-top:auto;padding-top:12px;}
+.card-read-btn a{display:inline-flex;align-items:center;gap:5px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--accent);}
+/* MULTILANG */
+.t-vi,.t-en,.t-ja{display:none;}
+[data-lang="vi"] .t-vi{display:inline;}
+[data-lang="en"] .t-en{display:inline;}
+[data-lang="ja"] .t-ja{display:inline;}
+.b-vi,.b-en,.b-ja{display:none;}
+[data-lang="vi"] .b-vi{display:block;}
+[data-lang="en"] .b-en{display:block;}
+[data-lang="ja"] .b-ja{display:block;}
+@media(max-width:768px){
+  .lang-bar,.header-top,.breadcrumb{padding-left:16px;padding-right:16px;}
+  .nav-inner{padding:0 16px;}
+  .footer-inner{grid-template-columns:1fr;padding:24px 16px;}
+  .footer-bottom{padding:12px 16px;flex-direction:column;gap:8px;text-align:center;}
+}
+
+
+.content-wrap{max-width:1200px;margin:0 auto;padding:48px 32px;display:grid;grid-template-columns:1fr 260px;gap:48px;}
+.article-body{font-size:17px;line-height:1.9;color:var(--text-muted);}
+.article-body p{margin-bottom:20px;}
+.article-body p.lead{color:var(--text);font-size:18px;}
+.article-body strong{color:var(--text);font-weight:600;}
+.article-body em{color:var(--accent3);font-style:italic;}
+.article-body h2{font-size:22px;font-weight:700;color:var(--white);margin:40px 0 14px;padding-top:40px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.h-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);background:rgba(47,129,247,0.1);border:1px solid rgba(47,129,247,0.25);padding:2px 10px;border-radius:4px;}
+.article-body h3{font-size:18px;font-weight:600;color:var(--white);margin:24px 0 10px;}
+.callout{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:16px 20px;margin:24px 0;}
+.callout.tip{border-left-color:var(--accent2);}
+.callout.warn{border-left-color:var(--yellow);}
+.callout.key{border-left-color:var(--accent3);}
+.callout-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;}
+.callout.tip .callout-label{color:var(--accent2);}
+.callout.warn .callout-label{color:var(--yellow);}
+.callout.key .callout-label{color:var(--accent3);}
+.callout p{font-size:14.5px;margin:0;}
+.highlight-box{background:linear-gradient(135deg,rgba(47,129,247,0.07),rgba(210,168,255,0.05));border:1px solid rgba(47,129,247,0.2);border-radius:8px;padding:20px 24px;margin:24px 0;}
+.highlight-box p{font-size:15px;margin:0;color:var(--text);font-style:italic;}
+.article-body ul,.article-body ol{padding-left:0;margin:14px 0 22px;list-style:none;}
+.article-body ul li,.article-body ol li{position:relative;padding-left:22px;margin-bottom:9px;font-size:15px;}
+.article-body ul li::before{content:'▸';color:var(--accent);position:absolute;left:0;}
+.article-body ol{counter-reset:ol;}
+.article-body ol li::before{counter-increment:ol;content:counter(ol);position:absolute;left:0;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--accent);background:rgba(47,129,247,0.1);border:1px solid rgba(47,129,247,0.2);width:17px;height:17px;border-radius:3px;display:flex;align-items:center;justify-content:center;top:4px;}
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse;font-size:14px;margin:20px 0;}
+.data-table th{background:var(--surface2);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;padding:10px 14px;text-align:left;border:1px solid var(--border);}
+.data-table td{padding:10px 14px;border:1px solid var(--border);color:var(--text-muted);line-height:1.55;}
+.data-table tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
+/* SIDEBAR */
+.sidebar-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:20px;overflow:hidden;}
+.sidebar-header{background:var(--surface2);padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);}
+.sidebar-header::before{content:'//';color:var(--text-dim);}
+.sidebar-body{padding:14px 16px;}
+.toc-list{list-style:none;}
+.toc-list li{border-bottom:1px solid var(--border-light);}
+.toc-list li:last-child{border-bottom:none;}
+.toc-list li a{display:block;padding:7px 0;font-family:'Source Serif 4',serif;font-size:13px;color:var(--text-muted);transition:color 0.2s;}
+.toc-list li a:hover{color:var(--accent);text-decoration:none;}
+.toc-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);margin-right:5px;}
+.related-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.related-item{background:var(--bg);border:1px solid var(--border-light);border-radius:6px;padding:10px 12px;transition:all 0.2s;}
+.related-item:hover{border-color:var(--accent);}
+.rel-cat{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.rel-title{font-size:13px;color:var(--text);line-height:1.4;}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;padding:4px 10px;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;}
+/* DIAGRAM */
+.diagram-box{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:24px;margin:24px 0;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);line-height:2;}
+.diagram-box .d-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px;}
+.d-node{display:inline-block;background:rgba(47,129,247,0.12);border:1px solid rgba(47,129,247,0.3);color:var(--accent);padding:4px 12px;border-radius:4px;margin:2px;}
+.d-arrow{color:var(--text-dim);margin:0 4px;}
+@media(max-width:860px){.content-wrap{grid-template-columns:1fr;padding:24px 16px;}}
+
+</style>
+</head>
+<body>
+<div class="lang-bar">
+  <div class="lang-bar-left"><div class="dot-live"></div><span>continuous-learner / it/cmdb-basics</span></div>
+  <div class="lang-btns">
+    <button class="lang-btn active" onclick="setLang(this,'ja')">JA</button>
+    <button class="lang-btn" onclick="setLang(this,'en')">EN</button>
+    <button class="lang-btn" onclick="setLang(this,'vi')">VI</button>
+  </div>
+</div>
+<header>
+  <div class="header-top">
+    <div>
+      <div class="logo-eyebrow">Continuous Learner</div>
+      <h1 class="site-title"><a href="index.html" style="color:inherit;text-decoration:none;"><span class="name">Ain</span>.dev</a></h1>
+    </div>
+  </div>
+  <nav>
+  <div class="nav-inner"><ul>
+    <li><a href="index.html">🏠 <span class="t-vi">Trang chủ</span><span class="t-en">Home</span><span class="t-ja">トップ</span></a></li>
+<li class="active"><a href="it-knowledge.html">☁️ <span class="t-vi">Kiến thức IT</span><span class="t-en">IT Knowledge</span><span class="t-ja">IT知識</span></a></li>
+<li><a href="consulting.html">🧠 <span class="t-vi">Consulting</span><span class="t-en">Consulting</span><span class="t-ja">コンサルスキル</span></a></li>
+<li><a href="language.html">📚 <span class="t-vi">Học ngôn ngữ</span><span class="t-en">Language</span><span class="t-ja">語学学習</span></a></li>
+<li><a href="japan-mindset.html">🗾 <span class="t-vi">Mindset ở Nhật</span><span class="t-en">Japan Mindset</span><span class="t-ja">日本マインド</span></a></li>
+<li><a href="japan-life.html">🌸 <span class="t-vi">Cuộc sống Nhật</span><span class="t-en">Life in Japan</span><span class="t-ja">日本生活</span></a></li>
+<li><a href="ain-about.html">👤 <span class="t-vi">Về mình</span><span class="t-en">About</span><span class="t-ja">自己紹介</span></a></li>
+
+  </ul></div>
+</nav>
+</header>
+
+<div class="breadcrumb">
+  <a href="index.html"><span class="t-vi">Home</span><span class="t-en">Home</span><span class="t-ja">トップ</span></a>
+  <span class="sep">/</span><a href="it-knowledge.html">IT Knowledge</a>
+  <span class="sep">/</span><span>CMDB Basics</span>
+</div>
+<section style="background:linear-gradient(135deg,var(--surface) 0%,#0d1117 70%);border-bottom:1px solid var(--border);padding:48px 32px;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(47,129,247,0.08) 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="max-width:1200px;margin:0 auto;position:relative;z-index:1;" class="fade-up">
+    <div style="display:inline-flex;align-items:center;gap:5px;background:rgba(47,129,247,0.15);border:1px solid #2f81f7;color:#2f81f7;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:18px;">☁️ IT知識</div>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(24px,3.5vw,42px);font-weight:700;color:var(--white);line-height:1.2;margin-bottom:14px;max-width:820px;">
+      <span class="t-vi">CMDB là gì? — Tổng quan cho người mới bắt đầu</span><span class="t-en">What is CMDB? — A Beginner's Overview</span><span class="t-ja">CMDBとは？— 初心者向け完全ガイド</span>
+    </h1>
+    <p style="font-size:16px;color:var(--text-muted);font-style:italic;max-width:660px;margin-bottom:20px;">
+      <span class="t-vi">Hiểu CMDB từ A-Z: CI, relationship, class, health — tất cả kiến thức nền tảng bạn cần cho ServiceNow CSA.</span><span class="t-en">Understand CMDB from A to Z: CIs, relationships, classes, health — all the foundation you need for ServiceNow CSA.</span><span class="t-ja">CI・リレーション・クラス・ヘルス——ServiceNow CSAに必要なCMDFの基礎をゼロから解説。</span>
+    </p>
+    <div style="display:flex;align-items:center;gap:14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);">
+      <span>📅 2025.12</span><span>⏱ 10 min</span><span>✍ Ain (Nguyen Anh)</span>
+    </div>
+  </div>
+</section>
+<div class="content-wrap">
+<article>
+<div class="article-body">
+
+<p class="lead t-vi">CMDB — Configuration Management Database — là trái tim của nền tảng ServiceNow. Nếu bạn đang chuẩn bị cho kỳ thi CSA hoặc làm việc với hệ thống ITSM, hiểu CMDB là điều <strong>không thể bỏ qua</strong>.</p>
+<p class="lead t-en">CMDB — Configuration Management Database — is the heart of the ServiceNow platform. If you're preparing for the CSA exam or working with ITSM systems, understanding CMDB is <strong>absolutely essential</strong>.</p>
+<p class="lead t-ja">CMDB（Configuration Management Database）はServiceNowプラットフォームの心臓部です。CSA試験を準備している、またはITSMシステムで働いている方にとって、CMDBの理解は<strong>欠かせません</strong>。</p>
+
+<div class="callout key">
+  <div class="callout-label">🎯 <span class="t-vi">Điểm chính cần nhớ cho kỳ thi</span><span class="t-en">Key exam points</span><span class="t-ja">試験の要点</span></div>
+  <p class="t-vi">CMDB lưu trữ thông tin về <strong>CI (Configuration Items)</strong> và <strong>mối quan hệ</strong> giữa chúng. Đây là nguồn dữ liệu trung tâm cho toàn bộ Now Platform.</p>
+  <p class="t-en">CMDB stores information about <strong>CI (Configuration Items)</strong> and their <strong>relationships</strong>. It is the central data source for the entire Now Platform.</p>
+  <p class="t-ja">CMDBは<strong>CI（設定アイテム）</strong>とその<strong>リレーションシップ</strong>の情報を格納します。Now Platform全体の中央データソースです。</p>
+</div>
+
+<h2 id="s1"><span class="h-num">01</span> <span class="t-vi">CMDB là gì?</span><span class="t-en">What is CMDB?</span><span class="t-ja">CMDBとは？</span></h2>
+
+<p class="t-vi">CMDB (Configuration Management Database) là cơ sở dữ liệu trung tâm lưu trữ thông tin về tất cả các thành phần trong hạ tầng IT của tổ chức. Thay vì chỉ là một danh sách tài sản tĩnh, CMDB theo dõi <strong>cả các mối quan hệ</strong> giữa các thành phần đó.</p>
+<p class="t-en">CMDB (Configuration Management Database) is a central database storing information about all components in an organization's IT infrastructure. Unlike a static asset list, CMDB also tracks <strong>the relationships</strong> between those components.</p>
+<p class="t-ja">CMDB（Configuration Management Database）は、組織のITインフラのすべてのコンポーネントに関する情報を格納する中央データベースです。静的な資産リストとは異なり、CMDBはコンポーネント間の<strong>関係性も追跡</strong>します。</p>
+
+<div class="diagram-box">
+  <div class="d-title">CMDB — Core Concept</div>
+  <div style="text-align:center;padding:10px 0;">
+    <span class="d-node">Server A</span>
+    <span class="d-arrow">──Hosts──▶</span>
+    <span class="d-node">App Service B</span>
+    <span class="d-arrow">──Depends on──▶</span>
+    <span class="d-node">Database C</span>
+  </div>
+  <div style="text-align:center;margin-top:10px;color:var(--text-dim);font-size:11px;">
+    <span class="t-vi">Mất Server A → Biết ngay App B và Database C bị ảnh hưởng</span>
+    <span class="t-en">Server A fails → Immediately know App B and Database C are affected</span>
+    <span class="t-ja">サーバーAが落ちる→アプリBとデータベースCへの影響を即座に把握</span>
+  </div>
+</div>
+
+<h2 id="s2"><span class="h-num">02</span> <span class="t-vi">Configuration Item (CI) là gì?</span><span class="t-en">What is a Configuration Item (CI)?</span><span class="t-ja">CI（設定アイテム）とは？</span></h2>
+
+<p class="t-vi">CI là bất kỳ thành phần nào cần được quản lý để cung cấp dịch vụ IT. CI có thể là:</p>
+<p class="t-en">A CI is any component that needs to be managed to deliver IT services. CIs can be:</p>
+<p class="t-ja">CIとは、ITサービスを提供するために管理が必要なあらゆるコンポーネントです。CIには以下が含まれます：</p>
+<ul>
+  <li><strong>Physical:</strong> <span class="t-vi">Máy chủ, router, laptop, máy in</span><span class="t-en">Server, router, laptop, printer</span><span class="t-ja">サーバー、ルーター、ノートPC、プリンター</span></li>
+  <li><strong>Logical:</strong> <span class="t-vi">Instance database, virtual machine, application</span><span class="t-en">Database instance, virtual machine, application</span><span class="t-ja">データベースインスタンス、仮想マシン、アプリケーション</span></li>
+  <li><strong>Conceptual:</strong> <span class="t-vi">Dịch vụ (HR Service, IT Helpdesk)</span><span class="t-en">Services (HR Service, IT Helpdesk)</span><span class="t-ja">サービス（人事サービス、ITヘルプデスク）</span></li>
+</ul>
+
+<table class="data-table">
+  <tr><th>CI Type</th><th>Example</th><th>CMDB Table</th></tr>
+  <tr><td>Hardware</td><td>Dell Server R740</td><td>cmdb_ci_server</td></tr>
+  <tr><td>Software</td><td>Oracle DB 19c</td><td>cmdb_ci_appl</td></tr>
+  <tr><td>Network</td><td>Cisco Router 9000</td><td>cmdb_ci_netgear</td></tr>
+  <tr><td>Service</td><td>Email Service</td><td>cmdb_ci_service</td></tr>
+</table>
+
+<h2 id="s3"><span class="h-num">03</span> <span class="t-vi">Tại sao CMDB quan trọng?</span><span class="t-en">Why does CMDB matter?</span><span class="t-ja">なぜCMDBが重要なのか？</span></h2>
+
+<p class="t-vi">CMDB không chỉ là một database thông thường — nó là <strong>công cụ ra quyết định</strong>. Khi một sự cố xảy ra, CMDB cho bạn biết ngay lập tức:</p>
+<p class="t-en">CMDB is not just an ordinary database — it is a <strong>decision-making tool</strong>. When an incident occurs, CMDB immediately tells you:</p>
+<p class="t-ja">CMDBはただのデータベースではなく、<strong>意思決定ツール</strong>です。インシデントが発生したとき、CMDBはすぐに教えてくれます：</p>
+<ul>
+  <li><span class="t-vi">Thành phần nào bị ảnh hưởng?</span><span class="t-en">Which components are affected?</span><span class="t-ja">どのコンポーネントが影響を受けるか？</span></li>
+  <li><span class="t-vi">Dịch vụ business nào sẽ gián đoạn?</span><span class="t-en">Which business services will be disrupted?</span><span class="t-ja">どのビジネスサービスが中断されるか？</span></li>
+  <li><span class="t-vi">Ai là người chịu trách nhiệm?</span><span class="t-en">Who is responsible?</span><span class="t-ja">誰が責任者か？</span></li>
+  <li><span class="t-vi">Thay đổi nào gần đây có thể gây ra vấn đề?</span><span class="t-en">What recent changes might have caused the issue?</span><span class="t-ja">最近のどの変更が原因の可能性があるか？</span></li>
+</ul>
+
+<h2 id="s4"><span class="h-num">04</span> <span class="t-vi">CMDB liên kết với các module nào?</span><span class="t-en">Which modules connect to CMDB?</span><span class="t-ja">どのモジュールがCMDBと連携するか？</span></h2>
+
+<div class="highlight-box">
+  <p class="t-vi">✦ <em>CMDB là backbone của toàn bộ Now Platform. Hầu hết mọi ServiceNow module đều dựa vào dữ liệu trong CMDB.</em></p>
+  <p class="t-en">✦ <em>CMDB is the backbone of the entire Now Platform. Most ServiceNow modules rely on data in the CMDB.</em></p>
+  <p class="t-ja">✦ <em>CMDBはNow Platform全体の基盤です。ほぼすべてのServiceNowモジュールがCMDBのデータに依存しています。</em></p>
+</div>
+<ul>
+  <li><strong>Incident Management</strong> — <span class="t-vi">Liên kết incident với CI bị ảnh hưởng</span><span class="t-en">Link incidents to affected CIs</span><span class="t-ja">インシデントを影響を受けたCIに紐付け</span></li>
+  <li><strong>Change Management</strong> — <span class="t-vi">Xác định CI nào cần được thay đổi</span><span class="t-en">Identify which CIs need to change</span><span class="t-ja">変更が必要なCIを特定</span></li>
+  <li><strong>Problem Management</strong> — <span class="t-vi">Phân tích xu hướng và nguyên nhân gốc rễ</span><span class="t-en">Analyze trends and root causes</span><span class="t-ja">トレンドと根本原因を分析</span></li>
+  <li><strong>Service Catalog</strong> — <span class="t-vi">Xác định CI nào phục vụ dịch vụ nào</span><span class="t-en">Identify which CIs support which services</span><span class="t-ja">どのCIがどのサービスをサポートするかを特定</span></li>
+</ul>
+
+<h2 id="s5"><span class="h-num">05</span> <span class="t-vi">Ôn tập nhanh cho kỳ thi</span><span class="t-en">Quick exam review</span><span class="t-ja">試験直前の復習ポイント</span></h2>
+<ul>
+  <li><span class="t-vi">CMDB = cơ sở dữ liệu trung tâm, lưu <strong>CI</strong> và <strong>relationship</strong></span><span class="t-en">CMDB = central database storing <strong>CIs</strong> and <strong>relationships</strong></span><span class="t-ja">CMDB = CIとリレーションシップを格納する中央DB</span></li>
+  <li><span class="t-vi">CI có thể là Physical / Logical / Conceptual</span><span class="t-en">CIs can be Physical / Logical / Conceptual</span><span class="t-ja">CIはPhysical・Logical・Conceptualの3種類</span></li>
+  <li><span class="t-vi">CMDB là nguồn dữ liệu cho Incident, Change, Problem, Service Catalog</span><span class="t-en">CMDB feeds data to Incident, Change, Problem, Service Catalog</span><span class="t-ja">CMDBはIncident・Change・Problem・カタログにデータを提供</span></li>
+  <li><span class="t-vi">Tất cả bảng CMDB đều extend từ <strong>cmdb_ci</strong> (base table)</span><span class="t-en">All CMDB tables extend from <strong>cmdb_ci</strong> (base table)</span><span class="t-ja">すべてのCMDBテーブルは<strong>cmdb_ci</strong>（ベーステーブル）を継承</span></li>
+</ul>
+
+</div>
+</article>
+<aside>
+  <div class="sidebar-block">
+    <div class="sidebar-header"><span class="t-vi">Mục lục</span><span class="t-en">Contents</span><span class="t-ja">目次</span></div>
+    <div class="sidebar-body"><ul class="toc-list"><li><a href="#s1"><span class="toc-num">01</span> <span class="t-vi">CMDB là gì?</span><span class="t-en">What is CMDB?</span><span class="t-ja">CMDBとは？</span></a></li>
+<li><a href="#s2"><span class="toc-num">02</span> <span class="t-vi">CI là gì?</span><span class="t-en">What is CI?</span><span class="t-ja">CIとは？</span></a></li>
+<li><a href="#s3"><span class="toc-num">03</span> <span class="t-vi">Tại sao CMDB quan trọng?</span><span class="t-en">Why CMDB matters?</span><span class="t-ja">なぜ重要？</span></a></li>
+<li><a href="#s4"><span class="toc-num">04</span> <span class="t-vi">Các module liên kết</span><span class="t-en">Connected modules</span><span class="t-ja">連携モジュール</span></a></li>
+<li><a href="#s5"><span class="toc-num">05</span> <span class="t-vi">Ôn tập nhanh</span><span class="t-en">Quick review</span><span class="t-ja">試験復習</span></a></li></ul></div>
+  </div>
+  <div class="sidebar-block">
+    <div class="sidebar-header"><span class="t-vi">Bài liên quan</span><span class="t-en">Related</span><span class="t-ja">関連記事</span></div>
+    <div class="sidebar-body"><ul class="related-list"><li class="related-item"><a href="it-ci-classes.html" style="text-decoration:none;display:block;"><div class="rel-cat">☁️ IT</div><div class="rel-title"><span class="t-vi">CI Class & Phân cấp</span><span class="t-en">CI Classes & Hierarchy</span><span class="t-ja">CIクラスと階層</span></div></a></li>
+<li class="related-item"><a href="it-ci-relationships.html" style="text-decoration:none;display:block;"><div class="rel-cat">☁️ IT</div><div class="rel-title"><span class="t-vi">CI Relationships</span><span class="t-en">CI Relationships</span><span class="t-ja">CIリレーション</span></div></a></li>
+<li class="related-item"><a href="post-consulting-accenture-year1.html" style="text-decoration:none;display:block;"><div class="rel-cat">🧠 Consulting</div><div class="rel-title"><span class="t-vi">Năm đầu ở Accenture</span><span class="t-en">First year at Accenture</span><span class="t-ja">アクセンチュア1年目</span></div></a></li></ul></div>
+  </div>
+  <div class="sidebar-block">
+    <div class="sidebar-header">Tags</div>
+    <div class="sidebar-body"><div class="tag-cloud"><span class="tag">CMDB</span> <span class="tag">ServiceNow</span> <span class="tag">CSA</span> <span class="tag">Configuration Item</span> <span class="tag">ITSM</span> <span class="tag">IT知識</span></div></div>
+  </div>
+</aside>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand"><span>Ain</span>.dev<small>// Continuous Learner</small>
+        <p class="t-vi">Blog chia sẻ về IT, Consulting, học ngôn ngữ và cuộc sống đi làm tại Nhật. Viết bằng 3 thứ tiếng.</p>
+        <p class="t-en">Sharing IT, Consulting, language learning, and working life in Japan. Written in 3 languages.</p>
+        <p class="t-ja">IT・コンサル・語学・日本での働き方を3言語で発信するブログ。</p>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4><span class="t-vi">Chuyên mục</span><span class="t-en">Categories</span><span class="t-ja">カテゴリ</span></h4>
+      <ul><li><a href="index.html"><span class="t-vi">Trang chủ</span><span class="t-en">Home</span><span class="t-ja">トップ</span></a></li><li><a href="it-knowledge.html"><span class="t-vi">Kiến thức IT</span><span class="t-en">IT Knowledge</span><span class="t-ja">IT知識</span></a></li><li><a href="consulting.html"><span class="t-vi">Consulting</span><span class="t-en">Consulting</span><span class="t-ja">コンサルスキル</span></a></li><li><a href="language.html"><span class="t-vi">Học ngôn ngữ</span><span class="t-en">Language</span><span class="t-ja">語学学習</span></a></li><li><a href="japan-mindset.html"><span class="t-vi">Mindset ở Nhật</span><span class="t-en">Japan Mindset</span><span class="t-ja">日本マインド</span></a></li><li><a href="japan-life.html"><span class="t-vi">Cuộc sống Nhật</span><span class="t-en">Life in Japan</span><span class="t-ja">日本生活</span></a></li><li><a href="ain-about.html"><span class="t-vi">Về mình</span><span class="t-en">About</span><span class="t-ja">自己紹介</span></a></li></ul>
+    </div>
+    <div>
+      <div class="footer-links">
+        <h4><span class="t-vi">Kết nối với Ánh</span><span class="t-en">Connect</span><span class="t-ja">繋がろう</span></h4>
+      </div>
+      <div class="footer-social"><a href="mailto:ngocanhnguyen9932@gmail.com" class="social-btn" target="_blank" rel="noopener"><span class="s-icon">📧</span>Gmail</a><a href="https://www.facebook.com/ngocanhnguyen.hikari" class="social-btn" target="_blank" rel="noopener"><span class="s-icon">📘</span>Facebook</a><a href="https://www.instagram.com/ailisa.hikari/" class="social-btn" target="_blank" rel="noopener"><span class="s-icon">📸</span>Instagram</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Ain (Nguyen Anh) · Made with ❤ in 🇯🇵 Japan</span>
+    <span>ngocanhnguyen9932@gmail.com</span>
+  </div>
+</footer>
+<script>
+function setLang(btn,lang){
+  document.documentElement.setAttribute('data-lang',lang);
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja" data-lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japan Work Mindset · Ain.dev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --bg:#0d1117;--surface:#161b22;--surface2:#1c2128;
+  --border:#30363d;--border-light:#21262d;
+  --text:#e6edf3;--text-muted:#8b949e;--text-dim:#484f58;
+  --accent:#2f81f7;--accent-glow:rgba(47,129,247,0.15);
+  --accent2:#3fb950;--accent3:#d2a8ff;
+  --yellow:#e3b341;--orange:#f0883e;--pink:#ff7b93;
+  --teal:#39d353;--white:#ffffff;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Source Serif 4','Times New Roman',Georgia,serif;background:var(--bg);color:var(--text);font-size:17px;line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+/* LANG */
+.lang-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:7px 32px;display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);}
+.dot-live{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px var(--teal);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.lang-bar-left{display:flex;align-items:center;gap:6px;}
+.lang-btns{display:flex;gap:4px;}
+.lang-btn{background:none;border:1px solid var(--border);color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1px;cursor:pointer;padding:3px 10px;border-radius:4px;transition:all 0.2s;}
+.lang-btn:hover{border-color:var(--accent);color:var(--accent);}
+.lang-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);}
+.header-top{max-width:1200px;margin:0 auto;padding:20px 32px 0;display:flex;align-items:flex-end;justify-content:space-between;}
+.logo-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:5px;display:flex;align-items:center;gap:6px;}
+.logo-eyebrow::before{content:'>';color:var(--accent2);}
+.site-title{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:600;color:var(--white);}
+.site-title .name{color:var(--accent);}
+nav{border-top:1px solid var(--border-light);margin-top:2px;}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:flex;overflow-x:auto;}
+nav ul{list-style:none;display:flex;flex-wrap:nowrap;}
+nav ul li a{display:block;padding:10px 13px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.2s;}
+nav ul li a:hover,nav ul li.active a{color:var(--white);border-bottom-color:var(--accent);text-decoration:none;}
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);margin-top:60px;}
+.footer-inner{max-width:1200px;margin:0 auto;padding:32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;}
+.footer-brand{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:600;color:var(--white);}
+.footer-brand span{color:var(--accent);}
+.footer-brand small{display:block;font-size:10px;color:var(--accent2);margin-top:4px;font-weight:400;}
+.footer-brand p{font-family:'Source Serif 4',serif;font-size:13px;color:var(--text-muted);margin-top:10px;line-height:1.6;font-weight:400;}
+.footer-links h4{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;}
+.footer-links ul{list-style:none;}
+.footer-links ul li{margin-bottom:7px;}
+.footer-links ul li a{font-family:'Inter',sans-serif;font-size:13px;color:var(--text-muted);transition:color 0.2s;}
+.footer-links ul li a:hover{color:var(--white);text-decoration:none;}
+.footer-social{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+.social-btn{display:inline-flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 14px;font-family:'Inter',sans-serif;font-size:12px;color:var(--text-muted);transition:all 0.2s;text-decoration:none;}
+.social-btn:hover{text-decoration:none;border-color:var(--accent);color:var(--white);}
+.social-btn .s-icon{font-size:16px;}
+.footer-bottom{max-width:1200px;margin:0 auto;padding:16px 32px;border-top:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);}
+/* BREADCRUMB */
+.breadcrumb{max-width:1200px;margin:0 auto;padding:12px 32px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.breadcrumb .sep{color:var(--border);}
+.breadcrumb a{color:var(--text-dim);}
+.breadcrumb a:hover{color:var(--accent);}
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp 0.5s ease both;}
+/* ARTICLE GRID */
+.article-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;}
+.article-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all 0.2s;display:flex;flex-direction:column;}
+.article-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 24px rgba(47,129,247,0.1);}
+.card-badge{padding:14px 16px 0;display:flex;align-items:center;gap:8px;}
+.cat-tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:12px;border:1px solid;}
+.card-body{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column;}
+.card-title{font-family:'Source Serif 4',serif;font-size:17px;font-weight:700;color:var(--white);line-height:1.3;margin-bottom:8px;}
+.card-desc{font-family:'Source Serif 4',serif;font-size:13.5px;color:var(--text-muted);line-height:1.65;flex:1;}
+.card-meta{display:flex;align-items:center;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border-light);}
+.card-meta span{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);}
+.card-read-btn{margin-top:auto;padding-top:12px;}
+.card-read-btn a{display:inline-flex;align-items:center;gap:5px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--accent);}
+/* MULTILANG */
+.t-vi,.t-en,.t-ja{display:none;}
+[data-lang="vi"] .t-vi{display:inline;}
+[data-lang="en"] .t-en{display:inline;}
+[data-lang="ja"] .t-ja{display:inline;}
+.b-vi,.b-en,.b-ja{display:none;}
+[data-lang="vi"] .b-vi{display:block;}
+[data-lang="en"] .b-en{display:block;}
+[data-lang="ja"] .b-ja{display:block;}
+@media(max-width:768px){
+  .lang-bar,.header-top,.breadcrumb{padding-left:16px;padding-right:16px;}
+  .nav-inner{padding:0 16px;}
+  .footer-inner{grid-template-columns:1fr;padding:24px 16px;}
+  .footer-bottom{padding:12px 16px;flex-direction:column;gap:8px;text-align:center;}
+}
+
+
+</style>
+</head>
+<body>
+<div class="lang-bar">
+  <div class="lang-bar-left"><div class="dot-live"></div><span>continuous-learner / japan-mindset</span></div>
+  <div class="lang-btns">
+    <button class="lang-btn active" onclick="setLang(this,'ja')">JA</button>
+    <button class="lang-btn" onclick="setLang(this,'en')">EN</button>
+    <button class="lang-btn" onclick="setLang(this,'vi')">VI</button>
+  </div>
+</div>
+<header>
+  <div class="header-top">
+    <div>
+      <div class="logo-eyebrow">Continuous Learner</div>
+      <h1 class="site-title"><a href="index.html" style="color:inherit;text-decoration:none;"><span class="name">Ain</span>.dev</a></h1>
+    </div>
+  </div>
+  <nav>
+  <div class="nav-inner"><ul>
+    <li><a href="index.html">🏠 <span class="t-vi">Trang chủ</span><span class="t-en">Home</span><span class="t-ja">トップ</span></a></li>
+<li><a href="it-knowledge.html">☁️ <span class="t-vi">Kiến thức IT</span><span class="t-en">IT Knowledge</span><span class="t-ja">IT知識</span></a></li>
+<li><a href="consulting.html">🧠 <span class="t-vi">Consulting</span><span class="t-en">Consulting</span><span class="t-ja">コンサルスキル</span></a></li>
+<li><a href="language.html">📚 <span class="t-vi">Học ngôn ngữ</span><span class="t-en">Language</span><span class="t-ja">語学学習</span></a></li>
+<li class="active"><a href="japan-mindset.html">🗾 <span class="t-vi">Mindset ở Nhật</span><span class="t-en">Japan Mindset</span><span class="t-ja">日本マインド</span></a></li>
+<li><a href="japan-life.html">🌸 <span class="t-vi">Cuộc sống Nhật</span><span class="t-en">Life in Japan</span><span class="t-ja">日本生活</span></a></li>
+<li><a href="ain-about.html">👤 <span class="t-vi">Về mình</span><span class="t-en">About</span><span class="t-ja">自己紹介</span></a></li>
+
+  </ul></div>
+</nav>
+</header>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a><span class="sep">/</span><span>🗾 Japan Work Mindset</span>
+</div>
+<section style="background:linear-gradient(135deg,var(--surface) 0%,var(--bg) 80%);border-bottom:1px solid var(--border);padding:48px 32px 40px;">
+  <div style="max-width:1200px;margin:0 auto;" class="fade-up">
+    <div style="display:inline-flex;align-items:center;gap:5px;background:rgba(227,179,65,0.15);border:1px solid #e3b341;color:#e3b341;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:14px;">🗾 Mindset</div>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(28px,4vw,48px);font-weight:700;color:var(--white);line-height:1.15;margin-bottom:12px;">
+      <span class="t-vi">Mindset đi làm ở Nhật</span><span class="t-en">Japan Work Mindset</span><span class="t-ja">日本で働くマインドセット</span>
+    </h1>
+    <p style="font-size:16px;color:var(--text-muted);max-width:620px;font-style:italic;margin-bottom:16px;">
+      <span class="t-vi">Những điểm khác biệt văn hóa làm việc tại Nhật mà mình phải học và điều chỉnh từ khi bắt đầu đi làm.</span><span class="t-en">Cultural differences in Japanese work style that I had to learn and adapt to since starting work.</span><span class="t-ja">日本の職場文化の違い——働き始めてから学び・適応してきたこと。</span>
+    </p>
+    <span style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);">1 <span class="t-vi">bài viết</span><span class="t-en">articles</span><span class="t-ja">記事</span></span>
+  </div>
+</section>
+<div style="max-width:1200px;margin:0 auto;padding:40px 32px;">
+  <div class="article-grid"><div class="article-card fade-up" style="animation-delay:0.05s">
+  <div class="card-badge"><span class="cat-tag" style="background:rgba(227,179,65,0.15);border-color:#e3b341;color:#e3b341;">🗾 Mindset</span></div>
+  <div class="card-body">
+    <div class="card-title">
+      <span class="t-vi">5 Mindset khác biệt khi đi làm ở Nhật so với Việt Nam</span>
+      <span class="t-en">5 Key mindset shifts when working in Japan vs Vietnam</span>
+      <span class="t-ja">日本とベトナムで働く際の5つのマインドセットの違い</span>
+    </div>
+    <div class="card-desc">
+      <span class="t-vi">Hou-ren-sou, Kaizen, Nemawashi — những triết lý làm việc mình học được tại môi trường Nhật Bản.</span>
+      <span class="t-en">Hou-ren-sou, Kaizen, Nemawashi — work philosophies I learned in the Japanese work environment.</span>
+      <span class="t-ja">報連相・改善・根回し——日本の職場環境で学んだ仕事の哲学。</span>
+    </div>
+    <div class="card-meta">
+      <span>📅 2026.01</span>
+      <span>⏱ 8 min</span>
+    </div>
+    <div class="card-read-btn">
+      <a href="#">
+        <span class="t-vi">Đọc bài →</span>
+        <span class="t-en">Read more →</span>
+        <span class="t-ja">記事を読む →</span>
+      </a>
+    </div>
+  </div>
+</div></div>
+  <div style="margin-top:32px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px;">
+    <p style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent2);margin-bottom:8px;">// COMING SOON</p>
+    <p style="font-size:14px;color:var(--text-muted);"><span class="t-vi">🚀 Đang viết: Cách report công việc kiểu Nhật, Meetings ở Accenture vs công ty Nhật truyền thống...</span><span class="t-en">🚀 Coming: Japanese-style work reporting, Meetings at Accenture vs traditional Japanese companies...</span><span class="t-ja">🚀 執筆中：日本式仕事報告・アクセンチュアvs日系企業のミーティング...</span></p>
+  </div>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand"><span>Ain</span>.dev<small>// Continuous Learner</small>
+        <p class="t-vi">Blog chia sẻ về IT, Consulting, học ngôn ngữ và cuộc sống đi làm tại Nhật. Viết bằng 3 thứ tiếng.</p>
+        <p class="t-en">Sharing IT, Consulting, language learning, and working life in Japan. Written in 3 languages.</p>
+        <p class="t-ja">IT・コンサル・語学・日本での働き方を3言語で発信するブログ。</p>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4><span class="t-vi">Chuyên mục</span><span class="t-en">Categories</span><span class="t-ja">カテゴリ</span></h4>
+      <ul><li><a href="index.html"><span class="t-vi">Trang chủ</span><span class="t-en">Home</span><span class="t-ja">トップ</span></a></li><li><a href="it-knowledge.html"><span class="t-vi">Kiến thức IT</span><span class="t-en">IT Knowledge</span><span class="t-ja">IT知識</span></a></li><li><a href="consulting.html"><span class="t-vi">Consulting</span><span class="t-en">Consulting</span><span class="t-ja">コンサルスキル</span></a></li><li><a href="language.html"><span class="t-vi">Học ngôn ngữ</span><span class="t-en">Language</span><span class="t-ja">語学学習</span></a></li><li><a href="japan-mindset.html"><span class="t-vi">Mindset ở Nhật</span><span class="t-en">Japan Mindset</span><span class="t-ja">日本マインド</span></a></li><li><a href="japan-life.html"><span class="t-vi">Cuộc sống Nhật</span><span class="t-en">Life in Japan</span><span class="t-ja">日本生活</span></a></li><li><a href="ain-about.html"><span class="t-vi">Về mình</span><span class="t-en">About</span><span class="t-ja">自己紹介</span></a></li></ul>
+    </div>
+    <div>
+      <div class="footer-links">
+        <h4><span class="t-vi">Kết nối với Ánh</span><span class="t-en">Connect</span><span class="t-ja">繋がろう</span></h4>
+      </div>
+      <div class="footer-social"><a href="mailto:ngocanhnguyen9932@gmail.com" class="social-btn" target="_blank" rel="noopener"><span class="s-icon">📧</span>Gmail</a><a href="https://www.facebook.com/ngocanhnguyen.hikari" class="social-btn" target="_blank" rel="noopener"><span class="s-icon">📘</span>Facebook</a><a href="https://www.instagram.com/ailisa.hikari/" class="social-btn" target="_blank" rel="noopener"><span class="s-icon">📸</span>Instagram</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Ain (Nguyen Anh) · Made with ❤ in 🇯🇵 Japan</span>
+    <span>ngocanhnguyen9932@gmail.com</span>
+  </div>
+</footer>
+<script>
+function setLang(btn,lang){
+  document.documentElement.setAttribute('data-lang',lang);
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

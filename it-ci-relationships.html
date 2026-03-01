@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ja" data-lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CI Relationships · ServiceNow CMDB · Ain.dev</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+  --bg:#0d1117;--surface:#161b22;--surface2:#1c2128;
+  --border:#30363d;--border-light:#21262d;
+  --text:#e6edf3;--text-muted:#8b949e;--text-dim:#484f58;
+  --accent:#2f81f7;--accent-glow:rgba(47,129,247,0.15);
+  --accent2:#3fb950;--accent3:#d2a8ff;
+  --yellow:#e3b341;--orange:#f0883e;--pink:#ff7b93;
+  --teal:#39d353;--white:#ffffff;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'Source Serif 4','Times New Roman',Georgia,serif;background:var(--bg);color:var(--text);font-size:17px;line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--bg);}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+/* LANG */
+.lang-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:7px 32px;display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);}
+.dot-live{width:8px;height:8px;border-radius:50%;background:var(--teal);box-shadow:0 0 6px var(--teal);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.5}}
+.lang-bar-left{display:flex;align-items:center;gap:6px;}
+.lang-btns{display:flex;gap:4px;}
+.lang-btn{background:none;border:1px solid var(--border);color:var(--text-muted);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:1px;cursor:pointer;padding:3px 10px;border-radius:4px;transition:all 0.2s;}
+.lang-btn:hover{border-color:var(--accent);color:var(--accent);}
+.lang-btn.active{background:var(--accent);border-color:var(--accent);color:#fff;}
+/* HEADER */
+header{background:var(--surface);border-bottom:1px solid var(--border);}
+.header-top{max-width:1200px;margin:0 auto;padding:20px 32px 0;display:flex;align-items:flex-end;justify-content:space-between;}
+.logo-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:5px;display:flex;align-items:center;gap:6px;}
+.logo-eyebrow::before{content:'>';color:var(--accent2);}
+.site-title{font-family:'JetBrains Mono',monospace;font-size:26px;font-weight:600;color:var(--white);}
+.site-title .name{color:var(--accent);}
+nav{border-top:1px solid var(--border-light);margin-top:2px;}
+.nav-inner{max-width:1200px;margin:0 auto;padding:0 32px;display:flex;overflow-x:auto;}
+nav ul{list-style:none;display:flex;flex-wrap:nowrap;}
+nav ul li a{display:block;padding:10px 13px;font-family:'Inter',sans-serif;font-size:12.5px;font-weight:500;color:var(--text-muted);border-bottom:2px solid transparent;white-space:nowrap;transition:all 0.2s;}
+nav ul li a:hover,nav ul li.active a{color:var(--white);border-bottom-color:var(--accent);text-decoration:none;}
+/* FOOTER */
+footer{background:var(--surface);border-top:1px solid var(--border);margin-top:60px;}
+.footer-inner{max-width:1200px;margin:0 auto;padding:32px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;}
+.footer-brand{font-family:'JetBrains Mono',monospace;font-size:18px;font-weight:600;color:var(--white);}
+.footer-brand span{color:var(--accent);}
+.footer-brand small{display:block;font-size:10px;color:var(--accent2);margin-top:4px;font-weight:400;}
+.footer-brand p{font-family:'Source Serif 4',serif;font-size:13px;color:var(--text-muted);margin-top:10px;line-height:1.6;font-weight:400;}
+.footer-links h4{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:12px;}
+.footer-links ul{list-style:none;}
+.footer-links ul li{margin-bottom:7px;}
+.footer-links ul li a{font-family:'Inter',sans-serif;font-size:13px;color:var(--text-muted);transition:color 0.2s;}
+.footer-links ul li a:hover{color:var(--white);text-decoration:none;}
+.footer-social{display:flex;flex-direction:column;gap:8px;margin-top:4px;}
+.social-btn{display:inline-flex;align-items:center;gap:8px;background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:8px 14px;font-family:'Inter',sans-serif;font-size:12px;color:var(--text-muted);transition:all 0.2s;text-decoration:none;}
+.social-btn:hover{text-decoration:none;border-color:var(--accent);color:var(--white);}
+.social-btn .s-icon{font-size:16px;}
+.footer-bottom{max-width:1200px;margin:0 auto;padding:16px 32px;border-top:1px solid var(--border-light);display:flex;justify-content:space-between;align-items:center;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);}
+/* BREADCRUMB */
+.breadcrumb{max-width:1200px;margin:0 auto;padding:12px 32px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.breadcrumb .sep{color:var(--border);}
+.breadcrumb a{color:var(--text-dim);}
+.breadcrumb a:hover{color:var(--accent);}
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{animation:fadeUp 0.5s ease both;}
+/* ARTICLE GRID */
+.article-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px;}
+.article-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;overflow:hidden;transition:all 0.2s;display:flex;flex-direction:column;}
+.article-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 24px rgba(47,129,247,0.1);}
+.card-badge{padding:14px 16px 0;display:flex;align-items:center;gap:8px;}
+.cat-tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:3px 10px;border-radius:12px;border:1px solid;}
+.card-body{padding:14px 16px 16px;flex:1;display:flex;flex-direction:column;}
+.card-title{font-family:'Source Serif 4',serif;font-size:17px;font-weight:700;color:var(--white);line-height:1.3;margin-bottom:8px;}
+.card-desc{font-family:'Source Serif 4',serif;font-size:13.5px;color:var(--text-muted);line-height:1.65;flex:1;}
+.card-meta{display:flex;align-items:center;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border-light);}
+.card-meta span{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-dim);}
+.card-read-btn{margin-top:auto;padding-top:12px;}
+.card-read-btn a{display:inline-flex;align-items:center;gap:5px;font-family:'Inter',sans-serif;font-size:12px;font-weight:600;color:var(--accent);}
+/* MULTILANG */
+.t-vi,.t-en,.t-ja{display:none;}
+[data-lang="vi"] .t-vi{display:inline;}
+[data-lang="en"] .t-en{display:inline;}
+[data-lang="ja"] .t-ja{display:inline;}
+.b-vi,.b-en,.b-ja{display:none;}
+[data-lang="vi"] .b-vi{display:block;}
+[data-lang="en"] .b-en{display:block;}
+[data-lang="ja"] .b-ja{display:block;}
+@media(max-width:768px){
+  .lang-bar,.header-top,.breadcrumb{padding-left:16px;padding-right:16px;}
+  .nav-inner{padding:0 16px;}
+  .footer-inner{grid-template-columns:1fr;padding:24px 16px;}
+  .footer-bottom{padding:12px 16px;flex-direction:column;gap:8px;text-align:center;}
+}
+
+
+.content-wrap{max-width:1200px;margin:0 auto;padding:48px 32px;display:grid;grid-template-columns:1fr 260px;gap:48px;}
+.article-body{font-size:17px;line-height:1.9;color:var(--text-muted);}
+.article-body p{margin-bottom:20px;}
+.article-body p.lead{color:var(--text);font-size:18px;}
+.article-body strong{color:var(--text);font-weight:600;}
+.article-body em{color:var(--accent3);font-style:italic;}
+.article-body h2{font-size:22px;font-weight:700;color:var(--white);margin:40px 0 14px;padding-top:40px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.h-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);background:rgba(47,129,247,0.1);border:1px solid rgba(47,129,247,0.25);padding:2px 10px;border-radius:4px;}
+.article-body h3{font-size:18px;font-weight:600;color:var(--white);margin:24px 0 10px;}
+.callout{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:16px 20px;margin:24px 0;}
+.callout.tip{border-left-color:var(--accent2);}
+.callout.warn{border-left-color:var(--yellow);}
+.callout.key{border-left-color:var(--accent3);}
+.callout-label{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:7px;}
+.callout.tip .callout-label{color:var(--accent2);}
+.callout.warn .callout-label{color:var(--yellow);}
+.callout.key .callout-label{color:var(--accent3);}
+.callout p{font-size:14.5px;margin:0;}
+.highlight-box{background:linear-gradient(135deg,rgba(47,129,247,0.07),rgba(210,168,255,0.05));border:1px solid rgba(47,129,247,0.2);border-radius:8px;padding:20px 24px;margin:24px 0;}
+.highlight-box p{font-size:15px;margin:0;color:var(--text);font-style:italic;}
+.article-body ul,.article-body ol{padding-left:0;margin:14px 0 22px;list-style:none;}
+.article-body ul li,.article-body ol li{position:relative;padding-left:22px;margin-bottom:9px;font-size:15px;}
+.article-body ul li::before{content:'▸';color:var(--accent);position:absolute;left:0;}
+.article-body ol{counter-reset:ol;}
+.article-body ol li::before{counter-increment:ol;content:counter(ol);position:absolute;left:0;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;color:var(--accent);background:rgba(47,129,247,0.1);border:1px solid rgba(47,129,247,0.2);width:17px;height:17px;border-radius:3px;display:flex;align-items:center;justify-content:center;top:4px;}
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse;font-size:14px;margin:20px 0;}
+.data-table th{background:var(--surface2);color:var(--white);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1px;padding:10px 14px;text-align:left;border:1px solid var(--border);}
+.data-table td{padding:10px 14px;border:1px solid var(--border);color:var(--text-muted);line-height:1.55;}
+.data-table tr:nth-child(even) td{background:rgba(255,255,255,0.02);}
+/* SIDEBAR */
+.sidebar-block{background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:20px;overflow:hidden;}
+.sidebar-header{background:var(--surface2);padding:10px 16px;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);}
+.sidebar-header::before{content:'//';color:var(--text-dim);}
+.sidebar-body{padding:14px 16px;}
+.toc-list{list-style:none;}
+.toc-list li{border-bottom:1px solid var(--border-light);}
+.toc-list li:last-child{border-bottom:none;}
+.toc-list li a{display:block;padding:7px 0;font-family:'Source Serif 4',serif;font-size:13px;color:var(--text-muted);transition:color 0.2s;}
+.toc-list li a:hover{color:var(--accent);text-decoration:none;}
+.toc-num{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);margin-right:5px;}
+.related-list{list-style:none;display:flex;flex-direction:column;gap:9px;}
+.related-item{background:var(--bg);border:1px solid var(--border-light);border-radius:6px;padding:10px 12px;transition:all 0.2s;}
+.related-item:hover{border-color:var(--accent);}
+.rel-cat{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px;}
+.rel-title{font-size:13px;color:var(--text);line-height:1.4;}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:6px;}
+.tag{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;padding:4px 10px;border:1px solid var(--border);color:var(--text-dim);border-radius:4px;}
+/* DIAGRAM */
+.diagram-box{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:24px;margin:24px 0;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);line-height:2;}
+.diagram-box .d-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--accent2);margin-bottom:14px;}
+.d-node{display:inline-block;background:rgba(47,129,247,0.12);border:1px solid rgba(47,129,247,0.3);color:var(--accent);padding:4px 12px;border-radius:4px;margin:2px;}
+.d-arrow{color:var(--text-dim);margin:0 4px;}
+@media(max-width:860px){.content-wrap{grid-template-columns:1fr;padding:24px 16px;}}
+
+</style>
+</head>
+<body>
+<div class="lang-bar">
+  <div class="lang-bar-left"><div class="dot-live"></div><span>continuous-learner / it/ci-relationships</span></div>
+  <div class="lang-btns">
+    <button class="lang-btn active" onclick="setLang(this,'ja')">JA</button>
+    <button class="lang-btn" onclick="setLang(this,'en')">EN</button>
+    <button class="lang-btn" onclick="setLang(this,'vi')">VI</button>
+  </div>
+</div>
+<header>
+  <div class="header-top">
+    <div>
+      <div class="logo-eyebrow">Continuous Learner</div>
+      <h1 class="site-title"><a href="index.html" style="color:inherit;text-decoration:none;"><span class="name">Ain</span>.dev</a></h1>
+    </div>
+  </div>
+  <nav>
+  <div class="nav-inner"><ul>
+    <li><a href="index.html">🏠 <span class="t-vi">Trang chủ</span><span class="t-en">Home</span><span class="t-ja">トップ</span></a></li>
+<li class="active"><a href="it-knowledge.html">☁️ <span class="t-vi">Kiến thức IT</span><span class="t-en">IT Knowledge</span><span class="t-ja">IT知識</span></a></li>
+<li><a href="consulting.html">🧠 <span class="t-vi">Consulting</span><span class="t-en">Consulting</span><span class="t-ja">コンサルスキル</span></a></li>
+<li><a href="language.html">📚 <span class="t-vi">Học ngôn ngữ</span><span class="t-en">Language</span><span class="t-ja">語学学習</span></a></li>
+<li><a href="japan-mindset.html">🗾 <span class="t-vi">Mindset ở Nhật</span><span class="t-en">Japan Mindset</span><span class="t-ja">日本マインド</span></a></li>
+<li><a href="japan-life.html">🌸 <span class="t-vi">Cuộc sống Nhật</span><span class="t-en">Life in Japan</span><span class="t-ja">日本生活</span></a></li>
+<li><a href="ain-about.html">👤 <span class="t-vi">Về mình</span><span class="t-en">About</span><span class="t-ja">自己紹介</span></a></li>
+
+  </ul></div>
+</nav>
+</header>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a><span class="sep">/</span>
+  <a href="it-knowledge.html">IT Knowledge</a><span class="sep">/</span><span>CI Relationships</span>
+</div>
+<section style="background:linear-gradient(135deg,var(--surface) 0%,#0d1117 70%);border-bottom:1px solid var(--border);padding:48px 32px;position:relative;overflow:hidden;">
+  <div style="position:absolute;top:-60px;right:-60px;width:300px;height:300px;background:radial-gradient(circle,rgba(47,129,247,0.08) 0%,transparent 70%);pointer-events:none;"></div>
+  <div style="max-width:1200px;margin:0 auto;position:relative;z-index:1;" class="fade-up">
+    <div style="display:inline-flex;align-items:center;gap:5px;background:rgba(47,129,247,0.15);border:1px solid #2f81f7;color:#2f81f7;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:18px;">☁️ IT知識</div>
+    <h1 style="font-family:'Source Serif 4',serif;font-size:clamp(24px,3.5vw,42px);font-weight:700;color:var(--white);line-height:1.2;margin-bottom:14px;max-width:820px;">
+      <span class="t-vi">CI Relationships — Tại sao mối quan hệ giữa CI quan trọng?</span><span class="t-en">CI Relationships — Why connections matter</span><span class="t-ja">CIリレーションシップ — なぜ繋がりが重要か</span>
+    </h1>
+    <p style="font-size:16px;color:var(--text-muted);font-style:italic;max-width:660px;margin-bottom:20px;">
+      <span class="t-vi">CMDB không chỉ là danh sách tài sản — mối quan hệ giữa CI mới là thứ biến nó thành công cụ ra quyết định.</span><span class="t-en">CMDB is more than an asset list — CI relationships are what turn it into a powerful decision tool.</span><span class="t-ja">CMDBは資産リストではない——CIのつながりこそが強力な意思決定ツールにする鍵。</span>
+    </p>
+    <div style="display:flex;align-items:center;gap:14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-dim);">
+      <span>📅 2025.11</span><span>⏱ 9 min</span><span>✍ Ain (Nguyen Anh)</span>
+    </div>
+  </div>
+</section>
+<div class="content-wrap">
+<article><div class="article-body">
+
+<p class="lead t-vi">Nếu CMDB chỉ lưu danh sách CI, nó không khác gì spreadsheet. Điều biến CMDB thành <strong>công cụ ra quyết định mạnh mẽ</strong> chính là dữ liệu về <em>mối quan hệ</em> giữa các CI.</p>
+<p class="lead t-en">If CMDB only stored a list of CIs, it wouldn't be different from a spreadsheet. What makes CMDB a <strong>powerful decision tool</strong> is the <em>relationship</em> data between CIs.</p>
+<p class="lead t-ja">CMDBがCIのリストを格納するだけなら、スプレッドシートと変わりません。CMDBを<strong>強力な意思決定ツール</strong>にするのは、CI間の<em>リレーションシップ</em>データです。</p>
+
+<div class="callout key">
+  <div class="callout-label">🎯 Key Exam Point</div>
+  <p class="t-vi">Mỗi relationship gồm 3 thành phần: <strong>Parent CI</strong> + <strong>Relationship Type</strong> + <strong>Child CI</strong>. Ví dụ: [Server1] [Managed by] [Server2].</p>
+  <p class="t-en">Each relationship consists of 3 components: <strong>Parent CI</strong> + <strong>Relationship Type</strong> + <strong>Child CI</strong>. Example: [Server1] [Managed by] [Server2].</p>
+  <p class="t-ja">各リレーションシップは3つの要素で構成：<strong>親CI</strong> + <strong>関係タイプ</strong> + <strong>子CI</strong>。例：[Server1] [Managed by] [Server2]。</p>
+</div>
+
+<h2 id="s1"><span class="h-num">01</span> <span class="t-vi">Cấu trúc của một CI Relationship</span><span class="t-en">Structure of a CI Relationship</span><span class="t-ja">CIリレーションシップの構造</span></h2>
+
+<div class="diagram-box">
+  <div class="d-title">Relationship Structure</div>
+  <div style="text-align:center;padding:16px 0;">
+    <span class="d-node" style="background:rgba(63,185,80,0.12);border-color:#3fb950;color:#3fb950;">Parent CI</span>
+    <span class="d-arrow">──[Relationship Type]──▶</span>
+    <span class="d-node" style="background:rgba(240,136,62,0.12);border-color:#f0883e;color:#f0883e;">Child CI</span>
+  </div>
+  <div style="text-align:center;margin-top:10px;font-size:11px;color:var(--text-dim);">
+    Example: [Database Server] [Hosts] [Oracle DB Instance]
+  </div>
+</div>
+
+<h2 id="s2"><span class="h-num">02</span> <span class="t-vi">Các loại Relationship phổ biến</span><span class="t-en">Common Relationship Types</span><span class="t-ja">よく使われるリレーションタイプ</span></h2>
+
+<table class="data-table">
+  <tr><th>Relationship Type</th><th>Meaning</th><th>Example</th></tr>
+  <tr><td><strong>Hosted on</strong></td><td><span class="t-vi">CI chạy trên CI khác</span><span class="t-en">CI runs on another CI</span><span class="t-ja">別CIの上で動作</span></td><td>App → Server</td></tr>
+  <tr><td><strong>Managed by</strong></td><td><span class="t-vi">CI được quản lý bởi CI/User khác</span><span class="t-en">CI is managed by another CI/User</span><span class="t-ja">別のCI/ユーザーが管理</span></td><td>Server → Admin Group</td></tr>
+  <tr><td><strong>Depends on</strong></td><td><span class="t-vi">CI phụ thuộc vào CI khác</span><span class="t-en">CI depends on another CI</span><span class="t-ja">別のCIに依存</span></td><td>App → Database</td></tr>
+  <tr><td><strong>Uses</strong></td><td><span class="t-vi">CI sử dụng tài nguyên của CI khác</span><span class="t-en">CI uses resources from another CI</span><span class="t-ja">別CIのリソースを使用</span></td><td>Service → Network Switch</td></tr>
+  <tr><td><strong>Connects to</strong></td><td><span class="t-vi">Kết nối vật lý hoặc logic</span><span class="t-en">Physical or logical connection</span><span class="t-ja">物理的または論理的な接続</span></td><td>Router → Switch</td></tr>
+</table>
+
+<h2 id="s3"><span class="h-num">03</span> <span class="t-vi">Dependency Views — Nhìn hạ tầng trực quan</span><span class="t-en">Dependency Views — Visual Infrastructure</span><span class="t-ja">依存関係ビュー — インフラの可視化</span></h2>
+<p class="t-vi">ServiceNow cung cấp <strong>Dependency Views</strong> — một công cụ trực quan hóa mối quan hệ giữa CI. Bạn có thể:</p>
+<p class="t-en">ServiceNow provides <strong>Dependency Views</strong> — a tool to visualize CI relationships. You can:</p>
+<p class="t-ja">ServiceNowは<strong>依存関係ビュー</strong>を提供します——CIリレーションシップを視覚化するツールです。以下が可能です：</p>
+<ul>
+  <li><span class="t-vi">Xem toàn bộ hạ tầng dưới dạng đồ thị</span><span class="t-en">View entire infrastructure as a graph</span><span class="t-ja">インフラ全体をグラフで表示</span></li>
+  <li><span class="t-vi">Xem real-time status của từng CI</span><span class="t-en">View real-time status of each CI</span><span class="t-ja">各CIのリアルタイムステータスを確認</span></li>
+  <li><span class="t-vi">Truy cập thông tin về incidents, changes, alerts liên quan</span><span class="t-en">Access related incidents, changes, and alerts</span><span class="t-ja">関連するインシデント・変更・アラートにアクセス</span></li>
+</ul>
+
+<div class="callout tip">
+  <div class="callout-label">💡 Practical Example</div>
+  <p class="t-vi">Router bị lỗi → Dependency View hiển thị ngay tất cả Server và Application bị ảnh hưởng → Incident được tự động tạo cho từng CI liên quan.</p>
+  <p class="t-en">Router fails → Dependency View instantly shows all affected Servers and Applications → Incidents automatically created for each affected CI.</p>
+  <p class="t-ja">ルーターが障害 → 依存関係ビューが影響を受けるサーバーとアプリを即座に表示 → 関連するCIごとにインシデントが自動作成。</p>
+</div>
+
+<h2 id="s4"><span class="h-num">04</span> <span class="t-vi">Suggested Relationships</span><span class="t-en">Suggested Relationships</span><span class="t-ja">推奨リレーションシップ</span></h2>
+<p class="t-vi">ServiceNow cho phép định nghĩa <strong>Suggested Relationships</strong> cho từng CI class — những mối quan hệ "thường gặp" khi tạo CI thuộc class đó. Điều này giúp:</p>
+<p class="t-en">ServiceNow allows defining <strong>Suggested Relationships</strong> for each CI class — "typical" relationships when creating CIs of that class. This helps:</p>
+<p class="t-ja">ServiceNowでは各CIクラスに<strong>推奨リレーションシップ</strong>を定義できます——そのクラスのCIを作成する際の「典型的な」関係です。これにより：</p>
+<ul>
+  <li><span class="t-vi">Hướng dẫn người dùng tạo relationship đúng</span><span class="t-en">Guide users to create correct relationships</span><span class="t-ja">正しいリレーション作成をユーザーに案内</span></li>
+  <li><span class="t-vi">Đảm bảo tính nhất quán dữ liệu CMDB</span><span class="t-en">Ensure CMDB data consistency</span><span class="t-ja">CMDBデータの一貫性を確保</span></li>
+</ul>
+
+<h2 id="s5"><span class="h-num">05</span> <span class="t-vi">Ôn tập cho kỳ thi</span><span class="t-en">Exam Review</span><span class="t-ja">試験復習</span></h2>
+<ul>
+  <li><span class="t-vi">Relationship = Parent CI + Type + Child CI</span><span class="t-en">Relationship = Parent CI + Type + Child CI</span><span class="t-ja">リレーション = 親CI + タイプ + 子CI</span></li>
+  <li><span class="t-vi">Relationship types phổ biến: Hosted on, Depends on, Managed by, Uses, Connects to</span><span class="t-en">Common types: Hosted on, Depends on, Managed by, Uses, Connects to</span><span class="t-ja">よくあるタイプ：Hosted on・Depends on・Managed by・Uses・Connects to</span></li>
+  <li><span class="t-vi">Dependency Views = công cụ trực quan hóa relationship</span><span class="t-en">Dependency Views = relationship visualization tool</span><span class="t-ja">依存関係ビュー = リレーション可視化ツール</span></li>
+  <li><span class="t-vi">Relationship data lưu trong bảng <strong>cmdb_rel_ci</strong></span><span class="t-en">Relationship data stored in <strong>cmdb_rel_ci</strong></span><span class="t-ja">リレーションデータは<strong>cmdb_rel_ci</strong>テーブルに格納</span></li>
+</ul>
+</div></article>
+<aside>
+  <div class="sidebar-block">
+    <div class="sidebar-header"><span class="t-vi">Mục lục</span><span class="t-en">Contents</span><span class="t-ja">目次</span></div>
+    <div class="sidebar-body"><ul class="toc-list"><li><a href="#s1"><span class="toc-num">01</span> <span class="t-vi">Cấu trúc Relationship</span><span class="t-en">Relationship Structure</span><span class="t-ja">リレーション構造</span></a></li>
+<li><a href="#s2"><span class="toc-num">02</span> <span class="t-vi">Các loại Relationship</span><span class="t-en">Relationship Types</span><span class="t-ja">リレーションタイプ</span></a></li>
+<li><a href="#s3"><span class="toc-num">03</span> <span class="t-vi">Dependency Views</span><span class="t-en">Dependency Views</span><span class="t-ja">依存関係ビュー</span></a></li>
+<li><a href="#s4"><span class="toc-num">04</span> <span class="t-vi">Suggested Relationships</span><span class="t-en">Suggested Relationships</span><span class="t-ja">推奨リレーション</span></a></li>
+<li><a href="#s5"><span class="toc-num">05</span> <span class="t-vi">Ôn tập</span><span class="t-en">Review</span><span class="t-ja">復習</span></a></li></ul></div>
+  </div>
+  <div class="sidebar-block">
+    <div class="sidebar-header"><span class="t-vi">Bài liên quan</span><span class="t-en">Related</span><span class="t-ja">関連記事</span></div>
+    <div class="sidebar-body"><ul class="related-list"><li class="related-item"><a href="it-cmdb-what-is.html" style="text-decoration:none;display:block;"><div class="rel-cat">☁️ IT</div><div class="rel-title"><span class="t-vi">CMDB Basics</span><span class="t-en">CMDB Basics</span><span class="t-ja">CMDB入門</span></div></a></li>
+<li class="related-item"><a href="it-cmdb-health.html" style="text-decoration:none;display:block;"><div class="rel-cat">☁️ IT</div><div class="rel-title"><span class="t-vi">CMDB Health</span><span class="t-en">CMDB Health</span><span class="t-ja">CMDBヘルス</span></div></a></li>
+<li class="related-item"><a href="it-identification.html" style="text-decoration:none;display:block;"><div class="rel-cat">☁️ IT</div><div class="rel-title"><span class="t-vi">ID & Reconciliation</span><span class="t-en">ID & Reconciliation</span><span class="t-ja">識別と調整</span></div></a></li></ul></div>
+  </div>
+  <div class="sidebar-block">
+    <div class="sidebar-header">Tags</div>
+    <div class="sidebar-body"><div class="tag-cloud"><span class="tag">CI Relationships</span> <span class="tag">Dependency Views</span> <span class="tag">cmdb_rel_ci</span> <span class="tag">Hosted on</span> <span class="tag">Depends on</span> <span class="tag">ServiceNow</span></div></div>
+  </div>
+</aside>
+</div>
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand"><span>Ain</span>.dev<small>// Continuous Learner</small>
+        <p class="t-vi">Blog chia sẻ về IT, Consulting, học ngôn ngữ và cuộc sống đi làm tại Nhật. Viết bằng 3 thứ tiếng.</p>
+        <p class="t-en">Sharing IT, Consulting, language learning, and working life in Japan. Written in 3 languages.</p>
+        <p class="t-ja">IT・コンサル・語学・日本での働き方を3言語で発信するブログ。</p>
+      </div>
+    </div>
+    <div class="footer-links">
+      <h4><span class="t-vi">Chuyên mục</span><span class="t-en">Categories</span><span class="t-ja">カテゴリ</span></h4>
+      <ul><li><a href="index.html"><span class="t-vi">Trang chủ</span><span class="t-en">Home</span><span class="t-ja">トップ</span></a></li><li><a href="it-knowledge.html"><span class="t-vi">Kiến thức IT</span><span class="t-en">IT Knowledge</span><span class="t-ja">IT知識</span></a></li><li><a href="consulting.html"><span class="t-vi">Consulting</span><span class="t-en">Consulting</span><span class="t-ja">コンサルスキル</span></a></li><li><a href="language.html"><span class="t-vi">Học ngôn ngữ</span><span class="t-en">Language</span><span class="t-ja">語学学習</span></a></li><li><a href="japan-mindset.html"><span class="t-vi">Mindset ở Nhật</span><span class="t-en">Japan Mindset</span><span class="t-ja">日本マインド</span></a></li><li><a href="japan-life.html"><span class="t-vi">Cuộc sống Nhật</span><span class="t-en">Life in Japan</span><span class="t-ja">日本生活</span></a></li><li><a href="ain-about.html"><span class="t-vi">Về mình</span><span class="t-en">About</span><span class="t-ja">自己紹介</span></a></li></ul>
+    </div>
+    <div>
+      <div class="footer-links">
+        <h4><span class="t-vi">Kết nối với Ánh</span><span class="t-en">Connect</span><span class="t-ja">繋がろう</span></h4>
+      </div>
+      <div class="footer-social"><a href="mailto:ngocanhnguyen9932@gmail.com" class="social-btn" target="_blank" rel="noopener"><span class="s-icon">📧</span>Gmail</a><a href="https://www.facebook.com/ngocanhnguyen.hikari" class="social-btn" target="_blank" rel="noopener"><span class="s-icon">📘</span>Facebook</a><a href="https://www.instagram.com/ailisa.hikari/" class="social-btn" target="_blank" rel="noopener"><span class="s-icon">📸</span>Instagram</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Ain (Nguyen Anh) · Made with ❤ in 🇯🇵 Japan</span>
+    <span>ngocanhnguyen9932@gmail.com</span>
+  </div>
+</footer>
+<script>
+function setLang(btn,lang){
+  document.documentElement.setAttribute('data-lang',lang);
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>

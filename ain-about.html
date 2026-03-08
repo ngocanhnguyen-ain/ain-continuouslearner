@@ -442,6 +442,228 @@ footer { background: var(--surface); border-top: 1px solid var(--border); }
 .a3{animation:fadeUp 0.5s ease 0.2s both}
 .a4{animation:fadeUp 0.5s ease 0.3s both}
 
+/* ABOUT-ME MENU SECTION */
+.about-menu-wrap { display: flex; flex-direction: column; gap: 12px; }
+.about-menu-item {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 10px; overflow: hidden; transition: border-color 0.25s;
+  cursor: pointer;
+}
+.about-menu-item:hover { border-color: var(--accent); }
+.about-menu-item.open { border-color: var(--accent); }
+.about-menu-trigger {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 20px; user-select: none;
+  position: relative;
+}
+.about-menu-icon { font-size: 22px; flex-shrink: 0; }
+.about-menu-label {
+  flex: 1;
+}
+.about-menu-label-main {
+  font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
+  color: var(--white); line-height: 1.3;
+}
+.about-menu-label-sub {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text-dim); margin-top: 2px;
+}
+.about-menu-arrow {
+  font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  color: var(--text-dim); transition: transform 0.3s, color 0.2s;
+  flex-shrink: 0;
+}
+.about-menu-item.open .about-menu-arrow { transform: rotate(90deg); color: var(--accent); }
+.about-menu-item:hover .about-menu-arrow { color: var(--accent); }
+.about-menu-accent-bar {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 3px; background: var(--accent); border-radius: 10px 0 0 10px;
+  opacity: 0; transition: opacity 0.2s;
+}
+.about-menu-item.open .about-menu-accent-bar,
+.about-menu-item:hover .about-menu-accent-bar { opacity: 1; }
+.about-menu-body {
+  display: none; border-top: 1px solid var(--border-light);
+  padding: 24px 22px 22px;
+  animation: fadeUp 0.3s ease both;
+}
+.about-menu-item.open .about-menu-body { display: block; }
+
+/* HOBBIES CARDS */
+.hobby-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px; }
+.hobby-card {
+  background: var(--bg); border: 1px solid var(--border-light);
+  border-radius: 8px; padding: 16px; transition: all 0.2s;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.hobby-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.hobby-img-slot {
+  width: 100%; aspect-ratio: 4/3;
+  background: var(--surface2); border-radius: 6px;
+  border: 1px dashed var(--border); display: flex;
+  align-items: center; justify-content: center; flex-direction: column; gap: 6px;
+  color: var(--text-dim); font-size: 11px; font-family: 'JetBrains Mono', monospace;
+  overflow: hidden;
+}
+.hobby-img-slot img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
+.hobby-emoji { font-size: 28px; }
+.hobby-title {
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+  color: var(--white);
+}
+.hobby-desc {
+  font-family: 'Source Serif 4', 'Times New Roman', serif; font-size: 12.5px;
+  color: var(--text-muted); line-height: 1.7; font-style: italic;
+}
+.hobby-meta {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--accent); display: flex; align-items: center; gap: 6px;
+}
+.hobby-meta::before { content: '◎'; font-size: 8px; }
+
+/* PROJECT CARDS */
+.project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.project-card {
+  background: var(--bg); border: 1px solid var(--border-light);
+  border-radius: 8px; padding: 18px; transition: all 0.2s;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.project-card:hover { border-color: var(--accent2); transform: translateY(-2px); }
+.project-card-img {
+  width: 100%; aspect-ratio: 16/9;
+  background: var(--surface2); border-radius: 6px;
+  border: 1px dashed var(--border); display: flex;
+  align-items: center; justify-content: center; flex-direction: column; gap: 5px;
+  color: var(--text-dim); font-size: 10px; font-family: 'JetBrains Mono', monospace;
+  overflow: hidden;
+}
+.project-card-img img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
+.project-name {
+  font-family: 'Inter', sans-serif; font-size: 13.5px; font-weight: 600;
+  color: var(--white); line-height: 1.35;
+}
+.project-role {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--accent2); margin-bottom: 2px;
+}
+.project-desc {
+  font-family: 'Source Serif 4', 'Times New Roman', serif; font-size: 12.5px;
+  color: var(--text-muted); line-height: 1.65; font-style: italic;
+}
+.project-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 4px; }
+.project-tag {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px; font-weight: 600;
+  padding: 2px 8px; border-radius: 3px;
+  background: var(--surface2); color: var(--text-dim);
+  border: 1px solid var(--border-light);
+}
+.project-tag.it { background: rgba(47,129,247,0.1); color: var(--accent); border-color: rgba(47,129,247,0.2); }
+.project-tag.student { background: rgba(63,185,80,0.1); color: var(--accent2); border-color: rgba(63,185,80,0.2); }
+.project-placeholder-note {
+  font-family: 'JetBrains Mono', monospace; font-size: 10.5px;
+  color: var(--text-dim); border: 1px dashed var(--border);
+  border-radius: 6px; padding: 12px 14px; text-align: center; line-height: 1.7;
+}
+
+/* SELF INTRO INSIDE ABOUT */
+.selfintro-box {
+  background: var(--bg); border: 1px solid var(--border-light);
+  border-radius: 8px; padding: 20px 24px;
+  display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: start;
+}
+.selfintro-avatar-slot {
+  width: 100px; height: 100px; border-radius: 50%;
+  background: var(--surface2); border: 2px dashed var(--border);
+  display: flex; align-items: center; justify-content: center; flex-direction: column;
+  font-size: 10px; color: var(--text-dim); font-family: 'JetBrains Mono', monospace;
+  text-align: center; overflow: hidden; flex-shrink: 0;
+}
+.selfintro-avatar-slot img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.selfintro-content { display: flex; flex-direction: column; gap: 10px; }
+.selfintro-text {
+  font-family: 'Source Serif 4', 'Times New Roman', serif; font-size: 14px;
+  color: var(--text-muted); line-height: 1.85; font-style: italic;
+}
+.selfintro-text strong { color: var(--white); font-style: normal; }
+.selfintro-keywords { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.selfintro-kw {
+  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+  padding: 3px 10px; border-radius: 20px;
+  background: var(--accent-glow); color: var(--accent);
+  border: 1px solid rgba(47,129,247,0.25);
+}
+
+/* UNIVERSITY ACTIVITY CARDS */
+.uni-section-header {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--accent2); margin-bottom: 16px;
+  display: flex; align-items: center; gap: 8px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border-light);
+}
+.uni-section-tag { font-size: 14px; }
+.activity-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+}
+.activity-card {
+  background: var(--bg); border: 1px solid var(--border-light);
+  border-radius: 8px; padding: 14px 16px;
+  display: flex; gap: 12px; align-items: flex-start;
+  transition: all 0.2s;
+}
+.activity-card:hover { border-color: var(--accent2); transform: translateY(-1px); }
+.activity-card--highlight { border-left: 3px solid var(--accent2); }
+.activity-icon { font-size: 22px; flex-shrink: 0; margin-top: 1px; }
+.activity-body { display: flex; flex-direction: column; gap: 7px; flex: 1; min-width: 0; }
+.activity-name {
+  font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 600;
+  color: var(--white); line-height: 1.35;
+}
+.activity-jp {
+  font-family: 'JetBrains Mono', monospace; font-size: 10px;
+  color: var(--text-dim); display: block; margin-bottom: 2px;
+}
+.activity-meta-row {
+  display: flex; flex-wrap: wrap; gap: 5px; align-items: center;
+}
+.activity-role-badge {
+  font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+  padding: 2px 8px; border-radius: 3px;
+  background: var(--surface2); color: var(--text-muted);
+  border: 1px solid var(--border-light);
+}
+.activity-role-badge--leader {
+  background: rgba(63,185,80,0.1); color: var(--accent2);
+  border-color: rgba(63,185,80,0.25);
+}
+.activity-period {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: var(--accent); background: var(--accent-glow);
+  border: 1px solid rgba(47,129,247,0.15);
+  padding: 2px 8px; border-radius: 20px; white-space: nowrap;
+}
+.activity-scale {
+  font-family: 'JetBrains Mono', monospace; font-size: 9px;
+  color: var(--text-dim); white-space: nowrap;
+}
+.activity-scale--win {
+  color: var(--yellow); font-weight: 700;
+}
+.activity-pr {
+  font-family: 'Source Serif 4', 'Times New Roman', serif; font-size: 12px;
+  color: var(--text-muted); line-height: 1.65; font-style: italic;
+  border-left: 2px solid var(--accent2); padding-left: 8px;
+  margin: 2px 0;
+}
+.activity-skills { display: flex; flex-wrap: wrap; gap: 4px; }
+.activity-skill {
+  font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
+  padding: 1px 7px; border-radius: 3px;
+  background: var(--surface2); color: var(--text-dim);
+  border: 1px solid var(--border-light);
+}
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
   .main-wrap { grid-template-columns: 1fr; padding: 24px 20px; }
@@ -992,6 +1214,754 @@ footer { background: var(--surface); border-top: 1px solid var(--border); }
     </ul>
   </div>
 
+
+  <!-- ABOUT ME MENU -->
+  <div class="section a4" id="about-me-section">
+    <div class="section-title">
+      <span class="t-vi">Phần về mình</span>
+      <span class="t-en">About Me</span>
+      <span class="t-ja">私について</span>
+    </div>
+    <div class="about-menu-wrap">
+
+      <!-- 1. Self Introduction -->
+      <div class="about-menu-item" onclick="toggleAbout(this)">
+        <div class="about-menu-trigger">
+          <div class="about-menu-accent-bar"></div>
+          <div class="about-menu-icon">🌸</div>
+          <div class="about-menu-label">
+            <div class="about-menu-label-main">
+              <span class="t-vi">Giới thiệu về bản thân</span>
+              <span class="t-en">Self Introduction</span>
+              <span class="t-ja">自己紹介</span>
+            </div>
+            <div class="about-menu-label-sub">
+              <span class="t-vi">Mình là ai · điều mình trân trọng</span>
+              <span class="t-en">Who I am · what I value</span>
+              <span class="t-ja">私のこと・大切にしていること</span>
+            </div>
+          </div>
+          <div class="about-menu-arrow">▶</div>
+        </div>
+        <div class="about-menu-body">
+          <div class="selfintro-box" style="grid-template-columns:1fr">
+            <div class="selfintro-content">
+              <p class="selfintro-text t-vi">
+                Mình là <strong>Ánh (Ain)</strong> — một người hay tò mò, thích học hỏi không ngừng, và tin rằng sự kết hợp giữa kỹ thuật, ngôn ngữ và con người tạo nên những điều thú vị nhất.
+                Sinh ra ở Việt Nam, học ở Nhật, làm việc tại Tokyo — hành trình của mình là chuỗi những quyết định dũng cảm và những bài học không ngờ tới.
+                Ngoài công việc IT, mình quan tâm đến <strong>văn hoá trà đạo</strong>, thích <strong>vận động</strong> và luôn tìm cách <strong>cân bằng giữa nội tâm và thế giới bên ngoài</strong>.
+              </p>
+              <p class="selfintro-text t-en">
+                I'm <strong>Ánh (Ain)</strong> — curious by nature, a lifelong learner, and someone who believes the intersection of technology, language and people creates the most interesting possibilities.
+                Born in Vietnam, studied in Japan, now working in Tokyo — my journey has been a series of bold choices and unexpected lessons.
+                Beyond IT, I'm drawn to <strong>Japanese tea ceremony</strong>, love <strong>physical training</strong>, and am always seeking <strong>balance between inner stillness and the outside world</strong>.
+              </p>
+              <p class="selfintro-text t-ja">
+                <strong>アイン（Ánh）</strong>です。好奇心旺盛で学び続けることが好き。技術・語学・人との関わりが交差するところに、一番面白いものがあると信じています。
+                ベトナム生まれ、日本で学び、今は東京で働いています。私の歩みは、勇気ある選択と予想外の学びの連続です。
+                IT以外では<strong>茶道</strong>に魅力を感じ、<strong>身体を動かすこと</strong>が好きで、<strong>内面の静けさと外の世界のバランス</strong>を大切にしています。
+              </p>
+              <div class="selfintro-keywords">
+                <span class="selfintro-kw">☁️ Cloud / SAP</span>
+                <span class="selfintro-kw">🍵 Trà đạo · 茶道</span>
+                <span class="selfintro-kw">🗣️ VI / JA / EN</span>
+                <span class="selfintro-kw">🥊 Pilates · Boxing</span>
+                <span class="selfintro-kw">✈️ Traveller</span>
+                <span class="selfintro-kw">📚 Continuous Learner</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. IT Projects -->
+      <div class="about-menu-item" onclick="toggleAbout(this)">
+        <div class="about-menu-trigger">
+          <div class="about-menu-accent-bar"></div>
+          <div class="about-menu-icon">💻</div>
+          <div class="about-menu-label">
+            <div class="about-menu-label-main">
+              <span class="t-vi">Các dự án IT đã làm</span>
+              <span class="t-en">IT Projects</span>
+              <span class="t-ja">ITプロジェクト</span>
+            </div>
+            <div class="about-menu-label-sub">
+              <span class="t-vi">Cloud · SAP · Infrastructure</span>
+              <span class="t-en">Cloud · SAP · Infrastructure</span>
+              <span class="t-ja">Cloud · SAP · インフラ</span>
+            </div>
+          </div>
+          <div class="about-menu-arrow">▶</div>
+        </div>
+        <div class="about-menu-body">
+
+          <!-- Section header -->
+          <div class="uni-section-header">
+            <span class="uni-section-tag">💻</span>
+            <span class="t-vi">Dự án IT · Accenture Japan · SAP Basis &amp; Cloud · 2023–nay</span>
+            <span class="t-en">IT Projects · Accenture Japan · SAP Basis &amp; Cloud · 2023–present</span>
+            <span class="t-ja">ITプロジェクト · アクセンチュア · SAP Basis &amp; Cloud · 2023年〜現在</span>
+          </div>
+
+          <div class="activity-grid">
+
+            <!-- Project 1: TRANSNET_JRC -->
+            <div class="activity-card">
+              <div class="activity-icon">🔧</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">TRANSNET_JRC · S/4HANA Install &amp; DB Refresh</span>
+                  <span class="t-vi">Dự án TRANSNET_JRC · Vận hành SAP Basis</span>
+                  <span class="t-en">TRANSNET_JRC · SAP Basis Operations</span>
+                  <span class="t-ja">TRANSNET_JRCプロジェクト · SAP Basis運用</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge">
+                    <span class="t-vi">SAP Basis · Vận hành &amp; Bảo trì</span>
+                    <span class="t-en">SAP Basis · Operations &amp; Maintenance</span>
+                    <span class="t-ja">SAP Basis · 運用保守</span>
+                  </span>
+                  <span class="activity-period">2023.04 – 2023.10 · 7<span class="t-vi"> tháng</span><span class="t-en"> mo.</span><span class="t-ja">ヶ月</span></span>
+                </div>
+                <p class="activity-pr b-vi">Dự án đầu tiên tại Accenture — mình không chỉ học quy trình vận hành SAP Basis hàng ngày mà còn <em>chủ động viết tài liệu hướng dẫn chi tiết</em>, phân tách từng bước của quy trình xử lý sự cố để người mới cũng có thể xử lý độc lập. Kết quả: giảm tải đáng kể cho cả nhóm ngay từ giai đoạn đầu vào nghề.</p>
+                <p class="activity-pr b-en">My first project at Accenture — I didn't just learn daily SAP Basis operations, I <em>proactively documented step-by-step incident runbooks</em> detailed enough for newcomers to act independently. Result: measurable reduction in team workload, even as a junior joining the field.</p>
+                <p class="activity-pr b-ja">アクセンチュア入社後最初のプロジェクト。SAP Basisの日常運用を習得するだけでなく、<em>障害対応手順書を自ら細分化・整備</em>し、初心者でも単独対応できる体制を構築。入社間もない時期から、チーム全体の運用負荷を軽減する成果を出しました。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">SAP Basis</span>
+                  <span class="activity-skill">SWPM</span>
+                  <span class="activity-skill">S/4HANA Install</span>
+                  <span class="activity-skill">DB Refresh</span>
+                  <span class="activity-skill">Runbook authoring</span>
+                  <span class="activity-skill">Incident management</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 2: TOGIS_TOHOGAS -->
+            <div class="activity-card activity-card--highlight">
+              <div class="activity-icon">⚡</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">TOGIS_TOHOGAS · S/4HANAコンバージョン + Unicode化 (同時実施)</span>
+                  <span class="t-vi">TOGIS_TOHOGAS · S/4HANA Conversion + Unicode hoá (đồng thời)</span>
+                  <span class="t-en">TOGIS_TOHOGAS · S/4HANA Conversion + Unicodification (simultaneous)</span>
+                  <span class="t-ja">TOGIS_TOHOGASプロジェクト · S/4HANA化 + Unicode化同時実施</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge activity-role-badge--leader">
+                    <span class="t-vi">SAP Basis · Onsite + Remote · PCE Platform</span>
+                    <span class="t-en">SAP Basis · Onsite + Remote · PCE Platform</span>
+                    <span class="t-ja">SAP Basis · オンサイト + リモート · PCE基盤</span>
+                  </span>
+                  <span class="activity-period">2023.10 – 2024.08 · 10<span class="t-vi"> tháng</span><span class="t-en"> mo.</span><span class="t-ja">ヶ月</span></span>
+                </div>
+                <p class="activity-pr b-vi">Đây là dự án thách thức nhất trong giai đoạn đầu sự nghiệp — thực hiện <em>đồng thời Unicode hoá và chuyển đổi S/4HANA</em> trên nền tảng PCE, vừa remote vừa onsite cho môi trường production. Mình viết toàn bộ tài liệu quy trình và đóng vai trò trực tiếp vận hành máy chủ production. Không chỉ hoàn thành đúng tiến độ — mà còn đề xuất cải tiến giúp cả nhóm tăng năng suất trong từng giai đoạn.</p>
+                <p class="activity-pr b-en">The most complex project early in my career — executing <em>Unicode migration and S/4HANA conversion simultaneously</em> on PCE platform, combining remote work for dev/test environments with hands-on onsite for production. I authored all procedure documents and operated the production server directly. Not only delivered on schedule — I also proposed workflow improvements that lifted the team's productivity across every phase.</p>
+                <p class="activity-pr b-ja">キャリア序盤で最も高難度のプロジェクト。PCE基盤上でのS/4HANA化とUnicode化を<em>同時進行</em>で実施。開発・テスト環境はリモートで、本番環境はオンサイトで直接対応。全手順書を自ら作成し、本番機の操作も担当。スケジュール通りに完遂するだけでなく、各フェーズで作業効率改善提案を行い、チーム全体の生産性向上にも貢献しました。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">S/4HANA Conversion</span>
+                  <span class="activity-skill">Unicodification</span>
+                  <span class="activity-skill">PCE Platform</span>
+                  <span class="activity-skill">SUM / SWPM</span>
+                  <span class="activity-skill">Production onsite ops</span>
+                  <span class="activity-skill">Process improvement</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 3: Enecom -->
+            <div class="activity-card activity-card--highlight">
+              <div class="activity-icon">🎯</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">Enecomプロジェクト · Unicode化 · カットオーバー成功 → 契約継続</span>
+                  <span class="t-vi">Dự án Enecom · Unicode hoá · Cutover đúng hạn → Gia hạn hợp đồng</span>
+                  <span class="t-en">Enecom Project · Unicode Migration · On-time Cutover → Contract Renewal</span>
+                  <span class="t-ja">Enecomプロジェクト · Unicode化 · 遅延ゼロ完遂 → 契約継続</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge activity-role-badge--leader">
+                    <span class="t-vi">Quản lý tiến độ &amp; rủi ro · Issue management</span>
+                    <span class="t-en">Schedule &amp; Issue Management · Cutover lead</span>
+                    <span class="t-ja">進捗・課題管理 · カットオーバーリード</span>
+                  </span>
+                  <span class="activity-period">2024.10 – 2025.03 · 5<span class="t-vi"> tháng</span><span class="t-en"> mo.</span><span class="t-ja">ヶ月</span></span>
+                  <span class="activity-scale activity-scale--win">
+                    <span class="t-vi">✓ Zero delay · Gia hạn 2025</span>
+                    <span class="t-en">✓ Zero delay · Renewed 2025</span>
+                    <span class="t-ja">✓ 遅延ゼロ · 2025年契約継続</span>
+                  </span>
+                </div>
+                <p class="activity-pr b-vi">Kết quả nói lên tất cả: <em>cutover đúng hạn, không trì hoãn</em> — và khách hàng chủ động gia hạn hợp đồng, tiếp tục giao phase tiếp theo. Đây là thước đo rõ ràng nhất của sự tin tưởng. Mình chịu trách nhiệm trực tiếp quản lý issue và tiến độ, đảm bảo mọi deadline được xử lý trước khi trở thành rủi ro thực sự.</p>
+                <p class="activity-pr b-en">The results speak clearly: <em>cutover delivered with zero delays</em> — and the client proactively renewed the contract and entrusted the next phase. That's the clearest measure of trust. I owned issue tracking and deadline management directly, ensuring every risk was resolved before it became a real problem.</p>
+                <p class="activity-pr b-ja">結果がすべてを語っています。<em>遅延ゼロでカットオーバーを完遂</em>し、お客様から自発的に2025年の契約継続・次フェーズの依頼をいただきました。これこそが信頼の証。課題管理と進捗管理を一手に担い、リスクが顕在化する前に対処する体制を構築しました。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">Unicode migration</span>
+                  <span class="activity-skill">Issue management</span>
+                  <span class="activity-skill">Schedule control</span>
+                  <span class="activity-skill">Cutover planning</span>
+                  <span class="activity-skill">Client trust building</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Project 4: TOPPAN -->
+            <div class="activity-card">
+              <div class="activity-icon">📋</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">TOPPANプロジェクト · 運用保守 + オフショア移管準備</span>
+                  <span class="t-vi">Dự án TOPPAN · Vận hành &amp; chuẩn bị chuyển giao offshore</span>
+                  <span class="t-en">TOPPAN Project · Operations &amp; Offshore Transition Prep</span>
+                  <span class="t-ja">TOPPANプロジェクト · 運用保守 + オフショア移管準備</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge">
+                    <span class="t-vi">Quản lý dự án · Facilitator · EWA Analysis</span>
+                    <span class="t-en">Project mgmt · Facilitator · EWA Analysis</span>
+                    <span class="t-ja">プロジェクト管理 · ファシリテーター · EWA分析</span>
+                  </span>
+                  <span class="activity-period">2024.04 – 2024.12 · 8<span class="t-vi"> tháng</span><span class="t-en"> mo.</span><span class="t-ja">ヶ月</span></span>
+                </div>
+                <p class="activity-pr b-vi">Dự án này không chỉ là "vận hành ổn định" — mình chủ động <em>xây dựng toàn bộ tài liệu để chuyển giao cho đội offshore</em>, tư vấn khách hàng về mô hình vận hành mới và thiết kế escalation flow cho các vấn đề liên phòng ban. Song song đó, giữ vai trò facilitator trong định kỳ họp với stakeholder để đảm bảo alignment. Đây là lúc mình nhận ra: kỹ năng giao tiếp + tư duy consulting còn quan trọng không kém kỹ thuật.</p>
+                <p class="activity-pr b-en">This project was more than "stable operations" — I proactively <em>built all documentation for offshore team handover</em>, advised the client on a new operations model, and designed cross-team escalation flows. Simultaneously facilitated monthly stakeholder meetings to maintain alignment. This is where I realized: communication skills + consulting mindset matter just as much as technical expertise.</p>
+                <p class="activity-pr b-ja">「安定した運用」だけにとどまらず、オフショア移管に向けた<em>全資料の整備をリード</em>し、新しい運用モデルをお客様へ提案。クロスチームのエスカレーションフローも設計しました。月次定例ではファシリテーターとして関係者間の合意形成を推進。技術力と同じくらい、コミュニケーション力とコンサル思考が重要だと実感したプロジェクトです。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">EWA Report analysis</span>
+                  <span class="activity-skill">Capacity management</span>
+                  <span class="activity-skill">Offshore documentation</span>
+                  <span class="activity-skill">Escalation design</span>
+                  <span class="activity-skill">Stakeholder mgmt</span>
+                  <span class="activity-skill">Facilitation</span>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /activity-grid -->
+        </div>
+      </div>
+
+      <!-- 3. Student Projects -->
+      <div class="about-menu-item" onclick="toggleAbout(this)">
+        <div class="about-menu-trigger">
+          <div class="about-menu-accent-bar"></div>
+          <div class="about-menu-icon">🎓</div>
+          <div class="about-menu-label">
+            <div class="about-menu-label-main">
+              <span class="t-vi">Các dự án thời sinh viên</span>
+              <span class="t-en">Student Projects</span>
+              <span class="t-ja">学生時代のプロジェクト</span>
+            </div>
+            <div class="about-menu-label-sub">
+              <span class="t-vi">IPU New Zealand · Thực tập · Nghiên cứu</span>
+              <span class="t-en">IPU New Zealand · Internship · Research</span>
+              <span class="t-ja">IPUニュージーランド · インターン · 研究</span>
+            </div>
+          </div>
+          <div class="about-menu-arrow">▶</div>
+        </div>
+        <div class="about-menu-body">
+
+          <!-- Section header -->
+          <div class="uni-section-header">
+            <span class="uni-section-tag">🎓</span>
+            <span class="t-vi">Hoạt động thời đại học · IPU New Zealand · 2019–2023</span>
+            <span class="t-en">University Activities · IPU New Zealand · 2019–2023</span>
+            <span class="t-ja">学生時代の活動 · IPUニュージーランド · 2019–2023</span>
+          </div>
+
+          <div class="activity-grid">
+
+            <!-- 1. Tea Ceremony Club -->
+            <div class="activity-card">
+              <div class="activity-icon">🍵</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">茶道サークル</span>
+                  <span class="t-vi">IPU Tea Ceremony Club</span>
+                  <span class="t-en">IPU Tea Ceremony Club</span>
+                  <span class="t-ja">IPU茶道サークル</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge">
+                    <span class="t-vi">Chủ tịch CLB (部長)</span>
+                    <span class="t-en">Club President (部長)</span>
+                    <span class="t-ja">部長</span>
+                  </span>
+                  <span class="activity-period">2019–2023 · 4<span class="t-vi"> năm</span><span class="t-en"> yrs</span><span class="t-ja">年間</span></span>
+                  <span class="activity-scale">20<span class="t-vi"> thành viên</span><span class="t-en"> members</span><span class="t-ja">名</span></span>
+                </div>
+                <p class="activity-pr b-vi">7 năm kiên trì học nghệ thuật Nhật → cam kết dài hạn với Nhật Bản & văn hoá bản địa.</p>
+                <p class="activity-pr b-en">7 years of persisting in Japanese arts → demonstrates long-term commitment to Japan & its culture.</p>
+                <p class="activity-pr b-ja">7年間、日本の伝統芸術を継続 → 日本への長期的なコミットメントを示す実績。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">Leadership</span>
+                  <span class="activity-skill">Event planning</span>
+                  <span class="activity-skill">Team management</span>
+                  <span class="activity-skill">Japanese culture</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Seminar Leader -->
+            <div class="activity-card">
+              <div class="activity-icon">📚</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">ゼミ長 / 副ゼミ長</span>
+                  <span class="t-vi">Trưởng / Phó nhóm Seminar</span>
+                  <span class="t-en">Seminar Leader / Vice Leader</span>
+                  <span class="t-ja">ゼミ長・副ゼミ長</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge">
+                    <span class="t-vi">ゼミ長 (2B) · 副ゼミ長 (năm 3)</span>
+                    <span class="t-en">Leader (2B) · Vice (Year 3)</span>
+                    <span class="t-ja">ゼミ長（2B）・副ゼミ長（3年）</span>
+                  </span>
+                  <span class="activity-period">2020–2022</span>
+                  <span class="activity-scale">15–20<span class="t-vi"> SV</span><span class="t-en"> students</span><span class="t-ja">名</span></span>
+                </div>
+                <p class="activity-pr b-vi">Academic leadership = tư duy giải quyết vấn đề + logical thinking trong môi trường đa văn hoá.</p>
+                <p class="activity-pr b-en">Academic leadership = problem-solving mindset + logical thinking in a multicultural setting.</p>
+                <p class="activity-pr b-ja">学術リーダーシップ = 問題解決力・論理的思考を多文化環境で実践。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">Facilitation</span>
+                  <span class="activity-skill">Discussion mgmt</span>
+                  <span class="activity-skill">Peer mentoring</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. OPIEF Vietnamese Consultant -->
+            <div class="activity-card">
+              <div class="activity-icon">🌐</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">OPIEF留学生相談員</span>
+                  <span class="t-vi">Tư vấn viên tiếng Việt · Tỉnh Okayama</span>
+                  <span class="t-en">Vietnamese Consultant · Okayama Prefecture</span>
+                  <span class="t-ja">OPIEF ベトナム語相談員</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge">
+                    <span class="t-vi">ベトナム語相談員</span>
+                    <span class="t-en">Vietnamese Language Concierge</span>
+                    <span class="t-ja">ベトナム語コンシェルジュ</span>
+                  </span>
+                  <span class="activity-period">2022–2023</span>
+                  <span class="activity-scale t-vi">Tỉnh Okayama</span>
+                  <span class="activity-scale t-en">Okayama Pref.</span>
+                  <span class="activity-scale t-ja">岡山県</span>
+                </div>
+                <p class="activity-pr b-vi">Tư vấn viên tiếng Việt cấp tỉnh → được tin tưởng bởi cơ quan chính phủ, uy tín cao.</p>
+                <p class="activity-pr b-en">Government-level Vietnamese consultant → trusted by public institutions, high credibility.</p>
+                <p class="activity-pr b-ja">行政レベルのベトナム語相談員 → 公的機関からの信頼・高い信用力。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">Cross-cultural advising</span>
+                  <span class="activity-skill">Multilingual support</span>
+                  <span class="activity-skill">Community service</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Vietnamese Language Teacher -->
+            <div class="activity-card">
+              <div class="activity-icon">📖</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">ベトナム語講師</span>
+                  <span class="t-vi">Giảng viên tiếng Việt</span>
+                  <span class="t-en">Vietnamese Language Teacher</span>
+                  <span class="t-ja">ベトナム語講師</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge">
+                    <span class="t-vi">Giáo viên</span>
+                    <span class="t-en">Instructor</span>
+                    <span class="t-ja">講師</span>
+                  </span>
+                  <span class="activity-period">2022–2023</span>
+                  <span class="activity-scale">16<span class="t-vi"> học sinh</span><span class="t-en"> students</span><span class="t-ja">名の生徒</span></span>
+                </div>
+                <p class="activity-pr b-vi">Dạy 16 học sinh → có khả năng đơn giản hoá các khái niệm phức tạp cho khách hàng.</p>
+                <p class="activity-pr b-en">Teaching 16 students → able to simplify complex topics clearly for any audience.</p>
+                <p class="activity-pr b-ja">16名への指導経験 → 複雑な内容をわかりやすく伝えるスキルを実証。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">Curriculum design</span>
+                  <span class="activity-skill">Teaching methodology</span>
+                  <span class="activity-skill">Patience & explanation</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Foreign Correspondent -->
+            <div class="activity-card">
+              <div class="activity-icon">📰</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">外国人記者 · Okayama</span>
+                  <span class="t-vi">Phóng viên người nước ngoài · Okayama</span>
+                  <span class="t-en">Foreign Correspondent · Okayama</span>
+                  <span class="t-ja">外国人記者（岡山）</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge">
+                    <span class="t-vi">Phóng viên (記者)</span>
+                    <span class="t-en">Reporter</span>
+                    <span class="t-ja">記者</span>
+                  </span>
+                  <span class="activity-period">2021–2023</span>
+                  <span class="activity-scale t-vi">Báo địa phương</span>
+                  <span class="activity-scale t-en">Okayama media</span>
+                  <span class="activity-scale t-ja">岡山メディア</span>
+                </div>
+                <p class="activity-pr b-vi">Media literacy → biết cách viết tài liệu kỹ thuật rõ ràng, mạch lạc như nhà báo chuyên nghiệp.</p>
+                <p class="activity-pr b-en">Media literacy → able to write clear, structured technical documentation like a professional journalist.</p>
+                <p class="activity-pr b-ja">メディアリテラシー → プロのジャーナリストのように明確な技術文書を書く力。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">Writing & Research</span>
+                  <span class="activity-skill">Story-telling</span>
+                  <span class="activity-skill">Japanese society</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Karate Club -->
+            <div class="activity-card">
+              <div class="activity-icon">🥋</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">空手サークル</span>
+                  <span class="t-vi">CLB Karate · 7級</span>
+                  <span class="t-en">Karate Club · 7th Kyu</span>
+                  <span class="t-ja">空手サークル · 7級取得</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge">
+                    <span class="t-vi">Thành viên · đạt 7級</span>
+                    <span class="t-en">Member · earned 7th Kyu</span>
+                    <span class="t-ja">メンバー・7級取得</span>
+                  </span>
+                  <span class="activity-period">2019–2021</span>
+                </div>
+                <p class="activity-pr b-vi">Đạt cấp bậc chính thức (7級) = tư duy rèn luyện có hệ thống, kiên trì từng bước.</p>
+                <p class="activity-pr b-en">Earned an official rank (7th Kyu) = systematic skill-building mindset and persistent practice.</p>
+                <p class="activity-pr b-ja">正式な段位（7級）取得 = 体系的なスキル構築マインドと継続的な努力の証明。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">Discipline</span>
+                  <span class="activity-skill">Physical training</span>
+                  <span class="activity-skill">Japanese dojo culture</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 7. YouTube Translator -->
+            <div class="activity-card">
+              <div class="activity-icon">📺</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">YouTubeチャンネル · NKH News EN→JP</span>
+                  <span class="t-vi">Biên dịch & Edit · NKH News (EN→JP)</span>
+                  <span class="t-en">Translator & Editor · NKH News (EN→JP)</span>
+                  <span class="t-ja">翻訳・編集者 · NKHニュース (EN→JP)</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge">
+                    <span class="t-vi">Translator + Editor</span>
+                    <span class="t-en">Translator + Editor</span>
+                    <span class="t-ja">翻訳者・編集者</span>
+                  </span>
+                  <span class="activity-period">2020–2022</span>
+                  <span class="activity-scale t-vi">Online</span>
+                  <span class="activity-scale t-en">Online channel</span>
+                  <span class="activity-scale t-ja">オンライン</span>
+                </div>
+                <p class="activity-pr b-vi">Content creator EN/JP song ngữ → có kỹ năng viết tài liệu kỹ thuật rõ ràng bằng 2 ngôn ngữ.</p>
+                <p class="activity-pr b-en">EN/JP bilingual content creator → strong technical writing ability in two languages.</p>
+                <p class="activity-pr b-ja">EN/JP バイリンガルコンテンツクリエイター → 2言語での技術文書作成能力を実証。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">EN–JP translation</span>
+                  <span class="activity-skill">Video editing</span>
+                  <span class="activity-skill">Content creation</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 8. Freelance Interpreter -->
+            <div class="activity-card">
+              <div class="activity-icon">🤝</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">通訳者 · フリーランス</span>
+                  <span class="t-vi">Phiên dịch viên · VI–JP (Freelance)</span>
+                  <span class="t-en">Interpreter / Translator · VI–JP (Freelance)</span>
+                  <span class="t-ja">通訳者・翻訳者（フリーランス）</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge">
+                    <span class="t-vi">VI–JP chuyên nghiệp</span>
+                    <span class="t-en">VI–JP Professional</span>
+                    <span class="t-ja">越日専門通訳</span>
+                  </span>
+                  <span class="activity-period">2019–2023 · 4<span class="t-vi"> năm</span><span class="t-en"> yrs</span><span class="t-ja">年間</span></span>
+                  <span class="activity-scale t-vi">Okayama</span>
+                  <span class="activity-scale t-en">Okayama region</span>
+                  <span class="activity-scale t-ja">岡山地域</span>
+                </div>
+                <p class="activity-pr b-vi">4 năm phiên dịch chuyên nghiệp → có thể giải thích bất cứ điều gì một cách rõ ràng, chính xác.</p>
+                <p class="activity-pr b-en">4 years of professional interpreting → able to explain anything clearly and precisely to any audience.</p>
+                <p class="activity-pr b-ja">4年間の専門通訳 → どんな内容も明確・正確に伝えるコミュニケーション力の証明。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">Professional interpretation</span>
+                  <span class="activity-skill">Business communication</span>
+                  <span class="activity-skill">On-the-spot problem solving</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 9. Vietnam Food Project -->
+            <div class="activity-card activity-card--highlight">
+              <div class="activity-icon">🍜</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">ベトナム料理販売 · RSK新聞掲載</span>
+                  <span class="t-vi">Dự án bán đồ ăn Việt Nam · Đăng báo RSK</span>
+                  <span class="t-en">Vietnam Food Project · Featured in RSK Newspaper</span>
+                  <span class="t-ja">ベトナム料理販売プロジェクト · RSK新聞掲載</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge activity-role-badge--leader">
+                    <span class="t-vi">Project Leader</span>
+                    <span class="t-en">Project Leader</span>
+                    <span class="t-ja">プロジェクトリーダー</span>
+                  </span>
+                  <span class="activity-period">2022<span class="t-vi"> · tháng 2</span><span class="t-en"> · Feb</span><span class="t-ja">年2月</span></span>
+                  <span class="activity-scale activity-scale--win">
+                    <span class="t-vi">100 suất bán hết · Đăng báo RSK</span>
+                    <span class="t-en">100 sold out · RSK newspaper</span>
+                    <span class="t-ja">100個完売 · RSK新聞掲載</span>
+                  </span>
+                </div>
+                <p class="activity-pr b-vi">Đăng báo RSK = impact có thể đo lường + tư duy entrepreneur từ thời sinh viên.</p>
+                <p class="activity-pr b-en">RSK newspaper coverage = measurable real-world impact + entrepreneurial mindset from university days.</p>
+                <p class="activity-pr b-ja">RSK新聞掲載 = 定量的な成果 + 学生時代からの起業家的思考の証明。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">Project planning</span>
+                  <span class="activity-skill">Budget management</span>
+                  <span class="activity-skill">SNS / Instagram marketing</span>
+                  <span class="activity-skill">Cross-cultural events</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 10. Waffle Charity Project -->
+            <div class="activity-card activity-card--highlight">
+              <div class="activity-icon">🧇</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">ワッフル販売 + UNICEF寄付</span>
+                  <span class="t-vi">Dự án bánh waffle từ thiện · UNICEF</span>
+                  <span class="t-en">Waffle Charity Project · UNICEF Donation</span>
+                  <span class="t-ja">ワッフル販売チャリティー · UNICEF寄付</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge activity-role-badge--leader">
+                    <span class="t-vi">Trưởng nhóm · Lập kế hoạch & thực thi</span>
+                    <span class="t-en">Leader · Planning & Execution</span>
+                    <span class="t-ja">企画・実行リーダー</span>
+                  </span>
+                  <span class="activity-period">2023<span class="t-vi"> · trước tốt nghiệp</span><span class="t-en"> · pre-graduation</span><span class="t-ja">年・卒業前</span></span>
+                  <span class="activity-scale activity-scale--win">
+                    <span class="t-vi">60 người · 80,000¥</span>
+                    <span class="t-en">60 participants · ¥80,000</span>
+                    <span class="t-ja">60名参加 · 8万円収益</span>
+                  </span>
+                </div>
+                <p class="activity-pr b-vi">Social impact + leadership = DNA phù hợp với văn hoá Accenture / Microsoft.</p>
+                <p class="activity-pr b-en">Social impact + leadership = exactly the DNA that fits Accenture / Microsoft culture.</p>
+                <p class="activity-pr b-ja">社会的インパクト + リーダーシップ = アクセンチュア・Microsoftのカルチャーにマッチするプロフィール。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">Event management</span>
+                  <span class="activity-skill">Fundraising</span>
+                  <span class="activity-skill">Team coordination</span>
+                  <span class="activity-skill">Social contribution</span>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /activity-grid -->
+        </div>
+      </div>
+
+      <!-- 4. Hobbies & Experiences -->
+      <div class="about-menu-item" onclick="toggleAbout(this)">
+        <div class="about-menu-trigger">
+          <div class="about-menu-accent-bar"></div>
+          <div class="about-menu-icon">✨</div>
+          <div class="about-menu-label">
+            <div class="about-menu-label-main">
+              <span class="t-vi">Sở thích và trải nghiệm</span>
+              <span class="t-en">Hobbies & Experiences</span>
+              <span class="t-ja">趣味と経験</span>
+            </div>
+            <div class="about-menu-label-sub">
+              <span class="t-vi">Trà đạo · Pilates · Chạy bộ · Du lịch</span>
+              <span class="t-en">Tea ceremony · Pilates · Running · Travel</span>
+              <span class="t-ja">茶道・ピラティス・ランニング・旅行</span>
+            </div>
+          </div>
+          <div class="about-menu-arrow">▶</div>
+        </div>
+        <div class="about-menu-body">
+
+          <!-- Section header -->
+          <div class="uni-section-header">
+            <span class="uni-section-tag">✨</span>
+            <span class="t-vi">Sở thích & Trải nghiệm · Phong cách sống · Tự phát triển bản thân</span>
+            <span class="t-en">Hobbies & Experiences · Lifestyle · Self-Growth</span>
+            <span class="t-ja">趣味・経験・自己成長</span>
+          </div>
+
+          <div class="activity-grid">
+
+            <!-- 1. Tea Ceremony -->
+            <div class="activity-card activity-card--highlight">
+              <div class="activity-icon">🍵</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">茶道 · 7年間継続</span>
+                  <span class="t-vi">Trà đạo · 7 năm kiên trì</span>
+                  <span class="t-en">Japanese Tea Ceremony · 7 years</span>
+                  <span class="t-ja">茶道 · 7年間</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge activity-role-badge--leader">
+                    <span class="t-vi">Chủ tịch CLB · 部長</span>
+                    <span class="t-en">Club President · 部長</span>
+                    <span class="t-ja">サークル部長</span>
+                  </span>
+                  <span class="activity-period">2019–<span class="t-vi">nay</span><span class="t-en">present</span><span class="t-ja">現在</span></span>
+                  <span class="activity-scale">20<span class="t-vi"> thành viên</span><span class="t-en"> members</span><span class="t-ja">名</span></span>
+                </div>
+                <p class="activity-pr b-vi">Trà đạo dạy mình tinh thần <em>おもてなし</em> — đặt mình vào vị trí người khác, chú tâm đến từng chi tiết nhỏ. Đây chính là nền tảng cho tư duy Customer Success trong công việc.</p>
+                <p class="activity-pr b-en">Tea ceremony taught me the spirit of <em>omotenashi</em> — putting others first, attending to every detail. This became the foundation of my Customer Success mindset at work.</p>
+                <p class="activity-pr b-ja">茶道を通じて<em>おもてなし</em>の精神——相手の立場に立ち、細部まで心を配ること——を深く学びました。これが仕事でのCustomer Success思考の原点です。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">おもてなし</span>
+                  <span class="activity-skill">Customer Success</span>
+                  <span class="activity-skill">Attention to detail</span>
+                  <span class="activity-skill">Long-term commitment</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Boxing + Pilates -->
+            <div class="activity-card">
+              <div class="activity-icon">🥊</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">ボクシング + ピラティス</span>
+                  <span class="t-vi">Boxing + Pilates · Quản lý stress & sức bền</span>
+                  <span class="t-en">Boxing + Pilates · Stress management & resilience</span>
+                  <span class="t-ja">ボクシング + ピラティス · ストレス管理・集中力</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge">
+                    <span class="t-vi">Boxing 1x/tuần · Pilates 2x/tuần</span>
+                    <span class="t-en">Boxing 1x/week · Pilates 2x/week</span>
+                    <span class="t-ja">ボクシング週1・ピラティス週2</span>
+                  </span>
+                  <span class="activity-period">2025–<span class="t-vi">nay</span><span class="t-en">present</span><span class="t-ja">現在</span></span>
+                </div>
+                <p class="activity-pr b-vi">Boxing rèn khả năng phản ứng dưới áp lực — "không nghĩ quá nhiều, phản ứng bằng cơ thể" — kỹ năng này trực tiếp hữu ích khi xử lý P1 incident. Pilates cải thiện tư thế và tập trung, giúp kéo dài hiệu suất làm việc dài giờ.</p>
+                <p class="activity-pr b-en">Boxing trains instinctive reaction under pressure — "stop overthinking, let the body respond" — a skill that directly transfers to handling P1 incidents. Pilates improved my posture and sustained focus during long working hours.</p>
+                <p class="activity-pr b-ja">ボクシングはプレッシャー下での瞬時の反応を鍛えます。「考えすぎず体で反応する」訓練はP1インシデント対応と直結。ピラティスは姿勢と集中力を改善し、長時間業務でのパフォーマンス維持に貢献しています。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">Pressure handling</span>
+                  <span class="activity-skill">P1 incident mindset</span>
+                  <span class="activity-skill">Focus & concentration</span>
+                  <span class="activity-skill">Habit building</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Running -->
+            <div class="activity-card">
+              <div class="activity-icon">🏃‍♀️</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">週末ランニング · 東京</span>
+                  <span class="t-vi">Chạy bộ cuối tuần · Tokyo</span>
+                  <span class="t-en">Weekend Running · Tokyo</span>
+                  <span class="t-ja">週末ランニング · 東京</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge">
+                    <span class="t-vi">Công viên Komazawa · Sông Arakawa</span>
+                    <span class="t-en">Komazawa Park · Arakawa River</span>
+                    <span class="t-ja">駒沢公園・荒川沿い</span>
+                  </span>
+                  <span class="activity-period t-vi">Cuối tuần</span>
+                  <span class="activity-period t-en">Weekends</span>
+                  <span class="activity-period t-ja">週末</span>
+                </div>
+                <p class="activity-pr b-vi">Chạy bộ là lúc mình sắp xếp lại những vấn đề đang giải quyết trong công việc — khoảng không gian để tư duy mà không có deadline. Tính kiên trì trong chạy bộ phản ánh cách mình tiếp cận mọi thứ: từng bước, đều đặn, bền bỉ.</p>
+                <p class="activity-pr b-en">Running is when I untangle work problems — a thinking space with no deadlines. The consistency in running mirrors how I approach everything: one step at a time, steady, persistent.</p>
+                <p class="activity-pr b-ja">ランニング中は仕事の課題を整理する時間でもあります。締め切りのない思考空間。継続して走り続けることは、何事にも「一歩ずつ、着実に」取り組む自分のスタイルを体現しています。</p>
+                <div class="activity-skills">
+                  <span class="activity-skill">Continuous improvement</span>
+                  <span class="activity-skill">Problem-solving mindset</span>
+                  <span class="activity-skill">Consistency</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Travel: Taiwan + Philippines -->
+            <div class="activity-card activity-card--highlight">
+              <div class="activity-icon">✈️</div>
+              <div class="activity-body">
+                <div class="activity-name">
+                  <span class="activity-jp">旅行 · 台湾 & フィリピン</span>
+                  <span class="t-vi">Du lịch · Đài Loan & Philippines</span>
+                  <span class="t-en">Travel · Taiwan & Philippines</span>
+                  <span class="t-ja">旅行 · 台湾・フィリピン</span>
+                </div>
+                <div class="activity-meta-row">
+                  <span class="activity-role-badge activity-role-badge--leader">
+                    <span class="t-vi">Immersive travel · Học có chủ đích</span>
+                    <span class="t-en">Immersive travel · Intentional learning</span>
+                    <span class="t-ja">イマーシブトラベル · 意図的な学び</span>
+                  </span>
+                </div>
+                <p class="activity-pr b-vi">
+                  <strong style="color:var(--text);font-style:normal">🇹🇼 Đài Loan:</strong> Nơi văn hóa Nhật Bản thời thuộc địa giao thoa với văn hóa Hoa — giúp mình mở rộng góc nhìn về "Châu Á đa tầng".<br>
+                  <strong style="color:var(--text);font-style:normal">🇵🇭 Philippines:</strong> Mình cố tình đặt mình vào môi trường 100% tiếng Anh — từ book phòng đến giao tiếp địa phương. Philippines cũng là trung tâm offshore của Microsoft và nhiều big-tech → nhận ra tiềm năng kết nối trong tương lai.
+                </p>
+                <p class="activity-pr b-en">
+                  <strong style="color:var(--text);font-style:normal">🇹🇼 Taiwan:</strong> Where Japanese colonial heritage meets Chinese culture — expanded my multi-layered view of Asia.<br>
+                  <strong style="color:var(--text);font-style:normal">🇵🇭 Philippines:</strong> I intentionally immersed myself in a full-English environment — from hotel negotiations to local conversations. Also home to Microsoft and many big-tech offshore hubs → sparked awareness of future partnership potential.
+                </p>
+                <p class="activity-pr b-ja">
+                  <strong style="color:var(--text);font-style:normal">🇹🇼 台湾:</strong> 日本統治時代の文化と中華文化が交差する社会を肌で感じ、「多層的なアジア」への視野が広がりました。<br>
+                  <strong style="color:var(--text);font-style:normal">🇵🇭 フィリピン:</strong> 意図的に英語のみの環境に身を置き、ビジネス英語の実戦力を磨きました。Microsoftなどのオフショア拠点でもあり、「将来の連携先かもしれない」という気づきも得ました。
+                </p>
+                <div class="activity-skills">
+                  <span class="activity-skill">English immersion</span>
+                  <span class="activity-skill">Cultural intelligence</span>
+                  <span class="activity-skill">Global business awareness</span>
+                  <span class="activity-skill">Proactive learning</span>
+                </div>
+              </div>
+            </div>
+
+          </div><!-- /activity-grid -->
+        </div>
+      </div>
+
+    </div><!-- /about-menu-wrap -->
+  </div><!-- /about-me-section -->
+
 </main>
 
 <!-- SIDEBAR -->
@@ -1128,3 +2098,25 @@ International Pacific University (IPU)
     </div>
     <div class="footer-copy">
       �
+      © 2025 Ain (Nguyen Anh) · All Rights Reserved
+    </div>
+  </div>
+</footer>
+
+<script>
+function setLang(btn, lang) {
+  document.documentElement.setAttribute('data-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function toggleAbout(item) {
+  const isOpen = item.classList.contains('open');
+  // Close all
+  document.querySelectorAll('.about-menu-item').forEach(el => el.classList.remove('open'));
+  // Open clicked if it was closed
+  if (!isOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>
